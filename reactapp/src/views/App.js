@@ -1,6 +1,6 @@
 import Header from './Header'
 import Home from './Home'
-import Editor from './Editor/Editor'
+import Editor from './Editor'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 function App ()
