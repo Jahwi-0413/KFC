@@ -3,6 +3,42 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import sentence from "../resources/sentence.png"
 import template from "../resources/template.png"
+
+function Home() {
+  return (
+    <Container>
+      <MainComment>
+        <MainCommentText>나의 손글씨를</MainCommentText>
+        <MainCommentText>글꼴로 만들고 싶으신가요?</MainCommentText>
+      </MainComment>
+
+      <GeneratorMenus>
+        <Link to='/sentence'>
+          <GeneratorButton>
+            <img src={sentence} alt="쉽게 만들기로 이동" />
+            <GeneratorComment>쉽게 만들기</GeneratorComment>
+          </GeneratorButton>
+        </Link>
+        <Link to='/template'>
+          <GeneratorButton>
+            <img src={template} alt="디테일하게 만들기로 이동" />
+            <GeneratorComment>디테일하게 만들기</GeneratorComment>
+          </GeneratorButton>
+        </Link>
+      </GeneratorMenus>
+
+      <Divider />
+      
+      <EditorMenu>
+        <EditorComment>나만의 폰트로 지인을 위한 편지를 작성해보세요.</EditorComment>
+        <Link to='/editor'>
+          <EditorButton>편지지 만들기</EditorButton>
+        </Link>
+      </EditorMenu>
+    </Container>
+  );
+}
+
 const Container = styled.div`
   text-align: center;
 `;
@@ -57,37 +93,5 @@ const EditorButton = styled.button`
     outline: none;
   }
 `;
-const Home = () =>
-{
-    return (
-        <Container>
-            <MainComment>
-                <MainCommentText>나의 손글씨를</MainCommentText>
-                <MainCommentText>글꼴로 만들고 싶으신가요?</MainCommentText>
-            </MainComment>
-            <GeneratorMenus>
-                <Link to='/sentence'>
-                    <GeneratorButton>
-                        <img src={sentence} alt="쉽게 만들기로 이동" />
-                        <GeneratorComment>쉽게 만들기</GeneratorComment>
-                    </GeneratorButton>
-                </Link>
-                <Link to='/template'>
-                    <GeneratorButton>
-                        <img src={template} alt="디테일하게 만들기로 이동" />
-                        <GeneratorComment>디테일하게 만들기</GeneratorComment>
-                    </GeneratorButton>
-                </Link>
-            </GeneratorMenus>
-            <Divider />
-            <EditorMenu>
-                <EditorComment>나만의 폰트로 지인을 위한 편지를 작성해보세요.</EditorComment>
-                <Link to='/editor'>
-                    <EditorButton>편지지 만들기</EditorButton>
-                </Link>
-            </EditorMenu>
-        </Container>
-    );
-}
 
-export default Home
+export default Home;

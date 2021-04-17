@@ -8,13 +8,7 @@ import Template from './Template';
 import Sentence from './Sentence';
 import Editor from './Editor';
 
-const Container = styled.div`
-  text-align: center;
-  min-width: 1000px;
-`;
-
-function App ()
-{
+function App () {
   return (
     <Container>
       <Router>
@@ -29,5 +23,10 @@ function App ()
     </Container>
   );
 }
+
+const Container = styled.div`
+  text-align: center;
+  min-width: 1000px;
+`;
 
 export default App;
