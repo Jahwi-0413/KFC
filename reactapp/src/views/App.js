@@ -1,20 +1,32 @@
-import Header from './Header'
-import Home from './Home'
-import Editor from './Editor'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
+
+import Header from '../components/Header';
+import Home from './Home';
+import Template from './Template';
+import Sentence from './Sentence';
+import Editor from './Editor';
+
+const Container = styled.div`
+  text-align: center;
+  min-width: 1000px;
+`;
 
 function App ()
 {
   return (
-    <>
+    <Container>
       <Router>
-        <Header />
-        <Route exact path="/" component={Home} />
-        <Route path="/sentence" />
-        <Route path="/template" />
-        <Route Editor="/editor" component={Editor} />
+        <Header/>
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/template" component={Template}/>
+          <Route exact path="/sentence" component={Sentence}/>
+          <Route exact path="/editor" component={Editor}/>
+        </Switch>
       </Router>
-    </>
+    </Container>
   );
 }
 
