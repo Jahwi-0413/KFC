@@ -12,7 +12,7 @@ function App ()
         <Route exact path="/" component={Home} />
         <Route path="/sentence" />
         <Route path="/template" />
-        <Route Editor="/editor" component={Editor} />
+        <Route path="/editor" component={Editor} />
       </Router>
     </>
   );
