@@ -8,16 +8,17 @@ import Template from './Template';
 import Sentence from './Sentence';
 import Editor from './Editor';
 
-function App () {
+function App ()
+{
   return (
     <Container>
       <Router>
-        <Header/>
+        <Header />
         <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/template" component={Template}/>
-          <Route exact path="/sentence" component={Sentence}/>
-          <Route exact path="/editor" component={Editor}/>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/template" component={Template} />
+          <Route exact path="/sentence" component={Sentence} />
+          <Route exact path="/editor" component={Editor} />
         </Switch>
       </Router>
     </Container>
