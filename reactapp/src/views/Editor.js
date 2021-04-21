@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
+import EditorModal from './EditorModal'
 
-function Editor ()
+function Editor (props)
 {
+  const [isOpenPopup, setIsOpenPopup] = useState(false)
+
+  const openModal = () => { setIsOpenPopup(true); console.log(isOpenPopup) }
+  const closeModal = () => setIsOpenPopup(false)
+  const uploadFile = (e) =>
+  {
+    const file = e.target.files[0]
+    console.log(e.target)
+    if (file !== null)
+      openModal()
+  }
+
   return (
     <Container>
       <Text>
@@ -17,16 +30,13 @@ function Editor ()
         <UploadIcon src={icon} />
         <Text2>파일 선택</Text2>
       </StyledDiv>
+      {isOpenPopup === true &&
+        <EditorModal close={closeModal} />}
     </Container>
   )
 }
 
-const uploadFile = (e) =>
-{
-  const file = e.target.files[0]
-  if (file !== null)
-    console.log(file)
-}
+
 const Container = styled.div`
     text-align: center;
     margin: 80px;
