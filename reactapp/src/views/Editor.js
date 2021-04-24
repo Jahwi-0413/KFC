@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
 import EditorModal from './EditorModal'
+import WindowOpener from 'react-window-opener'
 
 function Editor (props)
 {
@@ -29,13 +30,13 @@ function Editor (props)
         <StyledInput type="file" accept=".ttf" onChange={uploadFile} />
         <UploadIcon src={icon} />
         <Text2>파일 선택</Text2>
+        <WindowOpener url="/editor/modal" >click</WindowOpener>
       </StyledDiv>
       {isOpenPopup === true &&
         <EditorModal close={closeModal} />}
     </Container>
   )
 }
-
 
 const Container = styled.div`
     text-align: center;

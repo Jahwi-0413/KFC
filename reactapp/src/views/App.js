@@ -7,6 +7,7 @@ import Home from './Home';
 import Template from './Template';
 import Sentence from './Sentence';
 import Editor from './Editor';
+import EditorModal from './EditorModal';
 
 function App ()
 {
@@ -19,6 +20,7 @@ function App ()
           <Route exact path="/template" component={Template} />
           <Route exact path="/sentence" component={Sentence} />
           <Route exact path="/editor" component={Editor} />
+          <Route exact path="/editor/modal" component={EditorModal} />
         </Switch>
       </Router>
     </Container>

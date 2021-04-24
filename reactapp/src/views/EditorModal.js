@@ -1,12 +1,11 @@
-import ReactDom from 'react-dom'
+import React, { useState } from 'react'
+
 const EditorModal = (props) =>
 {
   return (
-    <div>
-      <div>
-        <button type="button" onClick={props.close}>close</button>
-      </div>
-    </div>
+    <center>
+      <button onClick={() => { window.close() }}>Close Me</button>
+    </center>
   )
 }
 
