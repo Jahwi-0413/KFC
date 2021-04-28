@@ -10,16 +10,25 @@ function Editor (props)
   const uploadFile = (e) =>
   {
     const file = e.target.files[0]
-    console.log(file);
-    console.log(file.type);
-    if (file !== null)
+    const checkResult = checkFileType(file)
+    if (file === null)
     {
-      setComment(file.name)
-      openPopup()
+      alert('파일을 등록해주세요')
+      return
     }
-
+    if (!checkResult)   //ttf 파일이 아니라면
+    {
+      alert('ttf파일을 등록해주세요')
+      return
+    }
+    setComment(file.name)
+    openPopup()
   }
-
+  const checkFileType = (file) =>
+  {
+    const type = file.name.slice(-3)
+    return (type === 'ttf' ? true : false) //파일 타입이 ttf라면 true
+  }
   const openPopup = () =>
   {
     const features = "width=900, height=800, location=yes, resizable=no, scrollbars=no";
