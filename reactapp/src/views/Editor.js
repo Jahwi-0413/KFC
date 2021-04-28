@@ -13,7 +13,17 @@ function Editor (props)
     console.log(file);
     console.log(file.type);
     if (file !== null)
+    {
       setComment(file.name)
+      openPopup()
+    }
+
+  }
+
+  const openPopup = () =>
+  {
+    const features = "width=900, height=800, location=yes, resizable=no, scrollbars=no";
+    window.open('/editor/modal', "test", features)
   }
 
   return (
@@ -31,18 +41,13 @@ function Editor (props)
               <tr>
                 <td>
                   <div>
-                    <label>
+                    <label htmlFor="file-input">
                       <UploadIcon src={icon} />
                     </label>
-                    <StyledInput type="file" accept=".ttf" onChange={uploadFile} />
+                    <StyledInput id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
                   </div>
                 </td>
                 <td><Text2>{comment}</Text2></td>
-                <td>
-                  <SubmitBtn type="submit">
-                    <WindowOpener url="/editor/modal" width={1000} height={900}>등록</WindowOpener>
-                  </SubmitBtn>
-                </td>
               </tr>
             </tbody>
           </table>
