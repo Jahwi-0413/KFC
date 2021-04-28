@@ -4,25 +4,25 @@ import icon from '../resources/file-upload-icon.svg'
 
 function Editor (props)
 {
-  const [comment, setComment] = useState("파일선택")
+  const [comment, setComment] = useState("파일선택");
 
   const uploadFile = (e) =>
   {
-    const file = e.target.files[0]
-    const checkResult = checkFileType(file)
+    const file = e.target.files[0];
+    const checkResult = checkFileType(file);
     if (file === null)
     {
-      alert('파일을 등록해주세요')
+      alert('파일을 등록해주세요');
       return
     }
     if (!checkResult)   //ttf 파일이 아니라면
     {
-      alert('ttf파일을 등록해주세요')
+      alert('ttf파일을 등록해주세요');
       return
     }
-    setComment(file.name)
-    openPopup()
-  }
+    setComment(file.name);
+    openPopup();
+  };
   const checkFileType = (file) =>
   {
     const type = file.name.slice(-3)
@@ -31,8 +31,8 @@ function Editor (props)
   const openPopup = () =>
   {
     const features = "width=900, height=800, location=yes, resizable=no, scrollbars=no";
-    window.open('/editor/modal', "test", features)
-  }
+    window.open('/editor/modal', "test", features);
+  };
 
   return (
     <Container>
@@ -43,27 +43,25 @@ function Editor (props)
             편집기를 사용해 보세요<br />
       </Text>
       <StyledDiv>
-        <StyledForm>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <div>
-                    <label htmlFor="file-input">
-                      <UploadIcon src={icon} />
-                    </label>
-                    <StyledInput id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
-                  </div>
-                </td>
-                <td><Text2>{comment}</Text2></td>
-              </tr>
-            </tbody>
-          </table>
-        </StyledForm>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div>
+                  <label htmlFor="file-input">
+                    <UploadIcon src={icon} />
+                  </label>
+                  <StyledInput id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
+                </div>
+              </td>
+              <td><Text2>{comment}</Text2></td>
+            </tr>
+          </tbody>
+        </table>
       </StyledDiv>
     </Container >
   )
-}
+};
 
 const Container = styled.div`
     margin-top: 60px;
@@ -83,24 +81,19 @@ const StyledDiv = styled.div`
   align-items:center;
   margin-top:30px;
 `
-const StyledForm = styled.form`
-`;
+
 const UploadIcon = styled.img`
   width: 50px;
   height: 40px;
 `;
+
 const StyledInput = styled.input`
   display:none;
 `;
+
 const Text2 = styled.div`
   font-size: 24px;
   margin-left:-10px;
 `;
 
-const SubmitBtn = styled.button`
-`;
-
-const WidFitContent = styled.div`
-  width:fit-content;
-`
 export default Editor;
