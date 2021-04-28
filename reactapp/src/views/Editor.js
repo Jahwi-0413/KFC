@@ -30,7 +30,7 @@ function Editor (props)
   }
   const openPopup = () =>
   {
-    const features = "width=900, height=800, location=yes, resizable=no, scrollbars=no";
+    const features = "width=1000, height=800, location=yes, resizable=no, scrollbars=no";
     window.open('/editor/modal', "test", features);
   };
 
