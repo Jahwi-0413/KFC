@@ -9,12 +9,12 @@ import Sentence from './Sentence';
 import Editor from './Editor';
 import EditorModal from './EditorModal';
 
-function App ()
+function App (props)
 {
   return (
     <Container>
       <Router>
-        <Header />
+        {props.location.pathname !== '/editor/modal' ? <Header /> : null}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/template" component={Template} />
