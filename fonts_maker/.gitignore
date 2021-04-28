@@ -1,0 +1,21 @@
+__pycache__/
+.vscode/
+
+# test data
+NanumBarunpenR.ttf
+result.ttf
+result/
+original.json
+result.json
+
+# pretrained_model
+pretrained/
+
+# pictures
+ori_handwriting/centered_pic/
+ori_handwriting/svgs/
+ori_handwriting/transparented/
+
+# datasets
+datasets/dumps/
+datasets/fonts/
