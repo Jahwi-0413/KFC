@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
-import WindowOpener from 'react-window-opener'
 
 function Editor (props)
 {
