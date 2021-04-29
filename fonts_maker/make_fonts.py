@@ -1,6 +1,6 @@
-import transparent
-import make_svg
-import jsongenerator
+import ori_handwriting.transparent as transparent
+import ori_handwriting.make_svg as make_svg
+import ori_handwriting.jsongenerator as jsongenerator
 from multiprocessing import freeze_support
 import time
 
