@@ -17,7 +17,7 @@ def transparent_img(img_path = PATH, out_path = SAVE_PATH, is_result = False):
         datas = img.getdata()
         
         newData = []
-        cutOff = 20
+        cutOff = 128
         
         for item in datas:
             if item[0] >= cutOff and item[1] >= cutOff and item[2] >= cutOff:

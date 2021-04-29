@@ -31,7 +31,7 @@ if __name__ == '__main__':
     import os
 
     os.system("fontforge -script svgs2ttf.py original.json")
-    
+    os.system("python prepare_dataset.py kor datasets/dumps meta/kor_split.json datasets/dumps")
     os.system("python evaluator.py KFC ./pretrained/korean-handwriting.pth ./result cfgs/kor.yaml --mode user-study-save")
 
     transparent.transparent_img(rst_pic_path, rst_transparent_path, True)

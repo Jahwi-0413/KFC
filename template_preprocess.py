@@ -133,7 +133,7 @@ for i, char in enumerate(char_list):
     
     crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
 
-    crop_img = centering_image(crop_img, verbose=True, pad_value=255)
+    crop_img = centering_image(crop_img, verbose=False, pad_value=255)
 
     char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
 
