@@ -1,59 +1,100 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
+import { sendFontFile } from '../RESTManager'
 
-const Editor = () =>
+function Editor (props)
 {
-    return (
-        <Container>
-            <Text>
-                나만의 손글씨로<br />
+  const [comment, setComment] = useState("파일선택");
+
+  const uploadFile = (e) =>
+  {
+    const file = e.target.files[0];
+    const checkResult = checkFileType(file);
+    if (file === null)
+    {
+      alert('파일을 등록해주세요');
+      return
+    }
+    if (!checkResult)   //ttf 파일이 아니라면
+    {
+      alert('ttf파일을 등록해주세요');
+      return
+    }
+    setComment(file.name);
+    sendFontFile(file, openPopup);
+  };
+
+  const checkFileType = (file) =>
+  {
+    const type = file.name.slice(-3)
+    return (type === 'ttf' ? true : false) //파일 타입이 ttf라면 true
+  }
+  const openPopup = () =>
+  {
+    const features = "width=1000, height=800, location=no, resizable=no, scrollbars=no";
+    window.open('/editor/modal', "test", features);
+  };
+  return (
+    <Container>
+      <Text>
+        나만의 손글씨로<br />
             편리하게 편지를 작성해보세요<br /><br />
             밑의 버튼을 눌러 폰트 파일을 등록하고<br />
             편집기를 사용해 보세요<br />
-            </Text>
-            <StyledDiv>
-                <StyledInput type="file" accept=".ttf" onChange={uploadFile} />
-                <UploadIcon src={icon} />
-                <Text2>파일 선택</Text2>
-            </StyledDiv>
-        </Container>
-    )
-}
+      </Text>
+      <StyledDiv>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div>
+                  <label htmlFor="file-input">
+                    <UploadIcon src={icon} />
+                  </label>
+                  <StyledInput name="ttf" id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
+                </div>
+              </td>
+              <td><Text2>{comment}</Text2></td>
+            </tr>
+          </tbody>
+        </table>
+      </StyledDiv>
+    </Container >
+  )
+};
 
-const uploadFile = (e) =>
-{
-    const file = e.target.files[0]
-    if (file !== null)
-        console.log(file)
-}
 const Container = styled.div`
-    text-align: center;
-    margin: 80px;
+    margin-top: 60px;
+    display:table;
+    margin-left:auto;
+    margin-right:auto;
 `;
 const Text = styled.div`
   font-size: 25px;
-  margin-top: 80px;
+  display:block;
+  display:table-row;
 `;
+
+const StyledDiv = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:30px;
+`
+
 const UploadIcon = styled.img`
   width: 50px;
-  height: 50px;
+  height: 40px;
 `;
-const StyledDiv = styled.div`
-  margin-top: 40px;
-  margin-left: -100px;
-`;
+
 const StyledInput = styled.input`
-  position: absolute; 
-  opacity: 0;
-  width: 160px;
-  height: 50px;
+  display:none;
 `;
-const Text2 = styled.p`
-  position: absolute;
-  font-size: 25px;
-  margin-top: 10px;
-  display: inline;
+
+const Text2 = styled.div`
+  font-size: 24px;
+  margin-left:-10px;
 `;
 
 export default Editor;
