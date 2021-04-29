@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
+import { sendFontFile } from '../RESTManager'
 
 function Editor (props)
 {
@@ -21,8 +22,9 @@ function Editor (props)
       return
     }
     setComment(file.name);
-    openPopup();
+    sendFontFile(file, openPopup);
   };
+
   const checkFileType = (file) =>
   {
     const type = file.name.slice(-3)
@@ -30,10 +32,9 @@ function Editor (props)
   }
   const openPopup = () =>
   {
-    const features = "width=1000, height=800, location=yes, resizable=no, scrollbars=no";
+    const features = "width=1000, height=800, location=no, resizable=no, scrollbars=no";
     window.open('/editor/modal', "test", features);
   };
-
   return (
     <Container>
       <Text>
@@ -51,7 +52,7 @@ function Editor (props)
                   <label htmlFor="file-input">
                     <UploadIcon src={icon} />
                   </label>
-                  <StyledInput id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
+                  <StyledInput name="ttf" id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
                 </div>
               </td>
               <td><Text2>{comment}</Text2></td>
