@@ -1,5 +1,16 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+
+function Header()
+{
+  return (
+    <Container>
+      <div>
+        <Title href="/">KFC</Title>
+        <SubTitle href="/">Kaligraphy Font Creator</SubTitle>
+      </div>
+    </Container>
+  )
+}
 
 const Container = styled.header`
   display: flex;
@@ -23,16 +34,5 @@ const SubTitle = styled.a`
   font-family: serif;
   text-decoration: none;
 `;
-
-function Header() {
-  return (
-    <Container>
-      <div>
-        <Title href="/">KFC</Title>
-        <SubTitle href="/">Kaligraphy Font Creator</SubTitle>
-      </div>
-    </Container>
-  )
-}
 
 export default Header;
