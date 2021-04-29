@@ -1,5 +1,6 @@
 __pycache__/
-.vscode/
+.vscode
+.vscode/settings.json
 
 # test data
 NanumBarunpenR.ttf
@@ -7,6 +8,7 @@ result.ttf
 result/
 original.json
 result.json
+ori_handwriting/test.png
 
 # pretrained_model
 pretrained/
