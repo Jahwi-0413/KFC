@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
 import { sendFontFile } from '../RESTManager'
-import EditorModal from './EditorModal'
+import EditorModal from '../components/EditorModal'
 
 function Editor (props)
 {
