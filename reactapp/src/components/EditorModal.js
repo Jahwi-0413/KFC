@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import '../index.css'
+import { requestRevertFile } from '../RESTManager'
 
 function EditorModal (props)
 {
   const closeModal = () =>
   {
+    requestRevertFile()
     window.location.reload(); //새로고침
   }
   return (
