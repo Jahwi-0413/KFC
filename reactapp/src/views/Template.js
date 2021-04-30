@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import template from '../resources/28-template.jpg'
-import dragin from '../resources/drag-in-icon.png'
+import DaD from '../components/DaD';
 
 function Template() {
   const templateDownload = () => {
@@ -23,14 +23,7 @@ function Template() {
           <TemplateImage src={template}/>
           <DownloadButton onClick={() => templateDownload()}>서식 다운로드</DownloadButton>
         </TemplateDownload>
-        
-        <TemplateUpload>
-          <UploadDragIn>
-            <DragInImage src={dragin}/>
-            <DragInNotice>직접 작성한 서식<br/>이미지를 올려보세요</DragInNotice>
-          </UploadDragIn>
-          <UploadNotice>* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요</UploadNotice>
-        </TemplateUpload>
+        <DaD comment={ <span>직접 작성한 서식<br/>이미지를 올려보세요</span> }/>
       </TemplateMenu>
     </Container>
   );
