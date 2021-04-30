@@ -23,7 +23,7 @@ function EditorModal (props)
 const Container = styled.div`
   width: 600px;
   height:800px;
-  margin-top:-10vw;
+  margin-top:-500px;
   display: flex;
   background-color:white;
   justify-content: center;

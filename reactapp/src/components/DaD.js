@@ -4,11 +4,14 @@ import { useDropzone } from 'react-dropzone';
 
 import dragin from '../resources/drag-in-icon.png';
 
-function DaD(props) {
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles[0].name)
+function DaD (props)
+{
+  const onDrop = useCallback(acceptedFiles =>
+  {
+    const file = acceptedFiles[0]
+    props.uploadFile(file)
   }, [])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <div {...getRootProps()}>
@@ -16,10 +19,10 @@ function DaD(props) {
 
       <UploadDiv>
         <UploadDragIn>
-          <DragInImage src={dragin}/>
+          <DragInImage src={dragin} />
           <DragInNotice>{props.comment}</DragInNotice>
         </UploadDragIn>
-        <UploadNotice>* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요</UploadNotice>
+        <UploadNotice>{props.notice}</UploadNotice>
       </UploadDiv>
     </div>
   )

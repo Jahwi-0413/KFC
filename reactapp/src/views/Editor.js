@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import icon from '../resources/file-upload-icon.svg'
 import { sendFontFile } from '../RESTManager'
 import EditorModal from '../components/EditorModal'
+import DaD from '../components/DaD'
 
 function Editor (props)
 {
-  const [comment, setComment] = useState("파일선택");
+  const comment = "손글씨 파일을 올려보세요";
+  const notice = ".ttf 확장자의 파일만 업로드 가능합니다.";
   const [modalState, setModalState] = useState(false);  //false가 닫힌거
 
-  const uploadFile = (e) =>
+  const uploadFile = (file) =>
   {
-    const file = e.target.files[0];
     const checkResult = checkFileType(file);
     if (file === null)
     {
@@ -23,7 +23,6 @@ function Editor (props)
       alert('ttf파일을 등록해주세요');
       return
     }
-    setComment(file.name);
     sendFontFile(file, setModalState);
 
   };
@@ -33,10 +32,7 @@ function Editor (props)
     const type = file.name.slice(-3)
     return (type === 'ttf' ? true : false) //파일 타입이 ttf라면 true
   }
-  const setModal = (state) =>
-  {
-    setModalState(state)
-  };
+
   return (
     <Container>
       <Text>
@@ -46,21 +42,7 @@ function Editor (props)
             편집기를 사용해 보세요<br />
       </Text>
       <StyledDiv>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div>
-                  <label htmlFor="file-input">
-                    <UploadIcon src={icon} />
-                  </label>
-                  <StyledInput name="ttf" id="file-input" type="file" accept=".ttf" onChange={uploadFile} />
-                </div>
-              </td>
-              <td><Text2>{comment}</Text2></td>
-            </tr>
-          </tbody>
-        </table>
+        <DaD comment={<span>{comment}</span>} notice={notice} uploadFile={uploadFile} />
         {modalState ? <EditorModal /> : null}
       </StyledDiv>
     </Container >
@@ -85,19 +67,4 @@ const StyledDiv = styled.div`
   align-items:center;
   margin-top:30px;
 `
-
-const UploadIcon = styled.img`
-  width: 50px;
-  height: 40px;
-`;
-
-const StyledInput = styled.input`
-  display:none;
-`;
-
-const Text2 = styled.div`
-  font-size: 24px;
-  margin-left:-10px;
-`;
-
 export default Editor;

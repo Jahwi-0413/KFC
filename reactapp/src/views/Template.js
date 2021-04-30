@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import template from '../resources/28-template.jpg'
 import DaD from '../components/DaD';
 
-function Template() {
-  const templateDownload = () => {
+function Template ()
+{
+  const templateDownload = () =>
+  {
     var element = document.createElement("a");
     element.href = "/28-template.jpg";
     element.download = "템플릿.jpg";
@@ -15,15 +17,16 @@ function Template() {
   return (
     <Container>
       <MainComment>
-        서식을 이용하여 더 정밀한<br/>손글씨 폰트를 만들어 보세요.
+        서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
       </MainComment>
 
       <TemplateMenu>
         <TemplateDownload>
-          <TemplateImage src={template}/>
+          <TemplateImage src={template} />
           <DownloadButton onClick={() => templateDownload()}>서식 다운로드</DownloadButton>
         </TemplateDownload>
-        <DaD comment={ <span>직접 작성한 서식<br/>이미지를 올려보세요</span> }/>
+        <DaD comment={<span>직접 작성한 서식<br />이미지를 올려보세요</span>}
+          notice={'* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요'} />
       </TemplateMenu>
     </Container>
   );
