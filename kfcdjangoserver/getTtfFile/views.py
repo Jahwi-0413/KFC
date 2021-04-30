@@ -14,12 +14,3 @@ def getTtfFile(request):
   response = HttpResponse("ok")
   response.status_code = 200
   return response
-
-@require_POST
-@csrf_exempt
-def revertFile(request):
-  print(request)
-  fm.revertFileName()
-  response = HttpResponse("ok")
-  response.status_code = 200
-  return response
