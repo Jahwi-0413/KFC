@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.getTtfFile, name='getTtfFile'),
+    path('', views.getTtfFile),
+    path('revertFile/', views.revertFile)
 ]
