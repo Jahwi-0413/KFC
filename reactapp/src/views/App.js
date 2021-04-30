@@ -7,18 +7,20 @@ import Home from './Home';
 import Template from './Template';
 import Sentence from './Sentence';
 import Editor from './Editor';
+import EditorModal from './EditorModal';
 
-function App ()
+function App (props)
 {
   return (
     <Container>
       <Router>
-        <Header />
+        {props.location.pathname !== '/editor/modal' ? <Header /> : null}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/template" component={Template} />
           <Route exact path="/sentence" component={Sentence} />
           <Route exact path="/editor" component={Editor} />
+          <Route exact path="/editor/modal" component={EditorModal} />
         </Switch>
       </Router>
     </Container>
