@@ -16,7 +16,7 @@ const sendFontFile = (file, callback) =>      //사용자가 입력한 ttf 파�
   }).then((response) =>
   {
     if (response.status === 200)
-      callback(false);
+      callback(true);
   });
 };
 

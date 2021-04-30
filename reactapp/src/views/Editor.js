@@ -24,7 +24,7 @@ function Editor (props)
       return
     }
     setComment(file.name);
-    sendFontFile(file, setModal);
+    sendFontFile(file, setModalState);
 
   };
 
@@ -35,7 +35,7 @@ function Editor (props)
   }
   const setModal = (state) =>
   {
-    state ? setModalState(false) : setModalState(true)
+    setModalState(state)
   };
   return (
     <Container>

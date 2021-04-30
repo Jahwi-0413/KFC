@@ -4,16 +4,16 @@ import '../index.css'
 
 function EditorModal (props)
 {
-  // const closeModal = () =>
-  // {
-  //   props.editorCloseModal(false);
-  // }
+  const closeModal = () =>
+  {
+    window.location.reload(); //새로고침
+  }
   return (
     <Container>
       <center>
         <StyledArea />
         <BtnPosition>
-          {/* <CloseBtn onClick={closeModal}>X</CloseBtn> */}
+          <CloseBtn onClick={closeModal}>X</CloseBtn>
         </BtnPosition>
       </center>
     </Container>
