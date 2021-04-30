@@ -16,9 +16,18 @@ const sendFontFile = (file, callback) =>      //사용자가 입력한 ttf 파�
   }).then((response) =>
   {
     if (response.status === 200)
-      callback();
+      callback(false);
   });
 };
 
+const requestRevertFile = (fileName) =>
+{
+  axios.post('getTtfFile/revertFile/', { fileName: fileName })
+    .then((response) =>
+    {
+      console.log(response);
+    })
+}
 
-export { sendFontFile }
+
+export { sendFontFile, requestRevertFile }

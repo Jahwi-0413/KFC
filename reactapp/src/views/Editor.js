@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import icon from '../resources/file-upload-icon.svg'
 import { sendFontFile } from '../RESTManager'
+import EditorModal from './EditorModal'
 
 function Editor (props)
 {
   const [comment, setComment] = useState("파일선택");
+  const [modalState, setModalState] = useState(false);  //false가 닫힌거
 
   const uploadFile = (e) =>
   {
@@ -22,7 +24,8 @@ function Editor (props)
       return
     }
     setComment(file.name);
-    sendFontFile(file, openPopup);
+    sendFontFile(file, setModal);
+
   };
 
   const checkFileType = (file) =>
@@ -30,10 +33,9 @@ function Editor (props)
     const type = file.name.slice(-3)
     return (type === 'ttf' ? true : false) //파일 타입이 ttf라면 true
   }
-  const openPopup = () =>
+  const setModal = (state) =>
   {
-    const features = "width=1000, height=800, location=no, resizable=no, scrollbars=no";
-    window.open('/editor/modal', "test", features);
+    state ? setModalState(false) : setModalState(true)
   };
   return (
     <Container>
@@ -59,6 +61,7 @@ function Editor (props)
             </tr>
           </tbody>
         </table>
+        {modalState ? <EditorModal /> : null}
       </StyledDiv>
     </Container >
   )

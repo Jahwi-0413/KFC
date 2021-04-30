@@ -2,26 +2,53 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import '../index.css'
 
-const EditorModal = (props) =>
+function EditorModal (props)
 {
+  // const closeModal = () =>
+  // {
+  //   props.editorCloseModal(false);
+  // }
   return (
     <Container>
       <center>
         <StyledArea />
+        <BtnPosition>
+          {/* <CloseBtn onClick={closeModal}>X</CloseBtn> */}
+        </BtnPosition>
       </center>
     </Container>
   )
 }
 
 const Container = styled.div`
-  margin-top:50px;
-  min-width:1000px;
-  min-height:800px;
+  width: 40vw;
+  height:80vh;
+  margin-top:-10vw;
+  display: flex;
+  background-color:white;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  border:1px solid black;
 `
+
 const StyledArea = styled.textarea`
   width:500px;
   height:700px;
   font-size:20px;
   font-family:testfont;
+`
+const BtnPosition = styled.div`
+  position:absolute;
+  right:16px;
+  top:8px;
+`
+const CloseBtn = styled.button`
+  outline:0;
+  border:0;
+  font-size:20px;
+  background-color:white;
+  position:relative;
+  top:0px;
 `
 export default EditorModal
