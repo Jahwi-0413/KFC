@@ -5,6 +5,13 @@ import template from '../resources/28-template.jpg'
 import dragin from '../resources/drag-in-icon.png'
 
 function Template() {
+  const templateDownload = () => {
+    var element = document.createElement("a");
+    element.href = "/28-template.jpg";
+    element.download = "템플릿.jpg";
+    element.click();
+  };
+
   return (
     <Container>
       <MainComment>
@@ -14,7 +21,7 @@ function Template() {
       <TemplateMenu>
         <TemplateDownload>
           <TemplateImage src={template}/>
-          <DownloadButton>서식 다운로드</DownloadButton>
+          <DownloadButton onClick={() => templateDownload()}>서식 다운로드</DownloadButton>
         </TemplateDownload>
         
         <TemplateUpload>
