@@ -23,7 +23,7 @@ const Container = styled.div`
   text-align: center;
 `;
 const MainComment = styled.p`
-  font-size: 35px;
+  font-size: 25px;
 `;
 const SentenceMenu = styled.div`
   margin: 100px;
@@ -33,8 +33,8 @@ const SentenceMenu = styled.div`
 `;
 const SentenceComment = styled.p`
   display: inline-block;
-  font-size: 30px;
-  margin-right: 200px;
+  font-size: 25px;
+  margin-right: 50px;
 `;
 
 export default Sentence;

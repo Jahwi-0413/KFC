@@ -36,8 +36,8 @@ const UploadDiv = styled.div`
 const UploadDragIn = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
-  height: 250px;
+  width: 250px;
+  height: 200px;
   background: lightgray;
   justify-content: center;
   align-items: center;

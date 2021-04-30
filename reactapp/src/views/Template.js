@@ -36,10 +36,11 @@ const Container = styled.div`
   text-align: center;
 `;
 const MainComment = styled.p`
-  font-size: 35px;
+  font-size: 25px;
 `;
 const TemplateMenu = styled.div`
   margin: 100px;
+  margin-top:80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +49,7 @@ const TemplateDownload = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 200px;
+  margin-right: 150px;
 `;
 const TemplateImage = styled.img`
   width: 160px;
