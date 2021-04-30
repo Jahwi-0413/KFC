@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import sentence from "../resources/sentence.png"
-import template from "../resources/template.png"
+
+import sentence from "../resources/sentence-icon.png"
+import template from "../resources/template-icon.png"
 
 function Home() {
   return (
     <Container>
       <MainComment>
-        <MainCommentText>나의 손글씨를</MainCommentText>
-        <MainCommentText>글꼴로 만들고 싶으신가요?</MainCommentText>
+        나의 손글씨를<br/>글꼴로 만들고 싶으신가요?
       </MainComment>
 
       <GeneratorMenus>
@@ -42,10 +42,7 @@ function Home() {
 const Container = styled.div`
   text-align: center;
 `;
-const MainComment = styled.span`
-`;
-const MainCommentText = styled.span`
-  display: block;
+const MainComment = styled.p`
   font-size: 35px;
 `;
 const GeneratorMenus = styled.div`
