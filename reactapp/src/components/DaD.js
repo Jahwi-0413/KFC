@@ -52,7 +52,7 @@ const DragInNotice = styled.p`
 `;
 const UploadNotice = styled.p`
   font-size: 10px;
-  color: gray;
+  color: #D36C6C;
   margin-top: 2px;
 `;
 

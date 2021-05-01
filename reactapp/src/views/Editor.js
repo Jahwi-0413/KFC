@@ -9,8 +9,8 @@ import { sendFontFile } from '../RESTManager';
 
 function Editor (props)
 {
-  const comment = "손글씨 파일을 올려보세요";
-  const notice = ".ttf 확장자의 파일만 업로드 가능합니다.";
+  const comment = <span>클릭하거나 드래그하여<br />폰트 파일을 올려보세요</span>;
+  const notice = "* .ttf 확장자의 파일만 업로드 가능합니다";
   const [ modalState, setModalState ] = useState(false);  //false가 닫힌거
 
   const closeModal = () => {
@@ -43,7 +43,7 @@ function Editor (props)
             편집기를 사용해 보세요<br />
       </Text>
       <StyledDiv>
-        <DaD comment={<span>{comment}</span>} notice={notice} uploadFile={uploadFile} />
+        <DaD comment={comment} notice={notice} uploadFile={uploadFile} />
       </StyledDiv>
     </Container >
   )

@@ -6,7 +6,7 @@ export const sendFontFile = (file, callback) =>      //사용자가 입력한 tt
 {
   const formData = new FormData();
   formData.append('ttf_file', file);
-  axios.post('/api/', formData, {
+  axios.post('/api/resTTF/', formData, {
     header: {
       'content-type': 'multipart/form-data',
       'Access-Control-Allow-Origin': '*',
@@ -21,18 +21,38 @@ export const sendFontFile = (file, callback) =>      //사용자가 입력한 tt
 
 export const sendTemplateImage = (file, callback) =>      //사용자가 입력한 ttf 파일을 서버로 전송
 {
-  // const formData = new FormData();
-  // formData.append('ttf_file', file);
-  // axios.post('/api/', formData, {
-  //   header: {
-  //     'content-type': 'multipart/form-data',
-  //     'Access-Control-Allow-Origin': '*',
-  //     "X-CSRFToken": 'csrfToken'
-  //   },
-  // }).then((response) =>
-  // {
-  //   if (response.status === 200)
-  //     callback(true);
-  // });
-  callback(true);
+  const formData = new FormData();
+  formData.append('file_name', file);
+  axios.post('/api/resTemplate/', formData, {
+    header: {
+      'content-type': 'multipart/form-data',
+      'Access-Control-Allow-Origin': '*',
+      "X-CSRFToken": 'csrfToken'
+    },
+  }).then((response) =>
+  {
+    if (response.status === 200)
+      callback(response.data);
+    else
+      callback(-1);
+  });
+};
+
+export const sendSentenceImage = (file, callback) =>      //사용자가 입력한 ttf 파일을 서버로 전송
+{
+  const formData = new FormData();
+  formData.append('file_name', file);
+  axios.post('/api/resSentence/', formData, {
+    header: {
+      'content-type': 'multipart/form-data',
+      'Access-Control-Allow-Origin': '*',
+      "X-CSRFToken": 'csrfToken'
+    },
+  }).then((response) =>
+  {
+    if (response.status === 200)
+      callback(response.data);
+    else
+      callback(-1);
+  });
 };

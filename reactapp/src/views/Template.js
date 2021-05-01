@@ -12,6 +12,7 @@ import { sendTemplateImage } from '../RESTManager';
 function Template ()
 {
   const [ modal, setModal ] = useState(false);
+  const [ generated, setGenerated ] = useState("");
   // const [ loaded, setLoaded ] = useState(false);
 
   // useEffect(() => {
@@ -48,13 +49,19 @@ function Template ()
       alert('이미지 파일을 등록해주세요');
       return;
     }
-    sendTemplateImage(file, setModal);
+
+    sendTemplateImage(file, setGenerated);
+    if (generated === -1)
+      setGenerated("폰트 생성 실패");
+    else
+      setGenerated("폰트 생성 중");
+    setModal(true);
   };
 
   return (
     <Container>
-      {modal && <Modal/>}
-      {modal && <Dimmer onClick={closeModal}></Dimmer>}
+      {modal && <Modal generated={generated}/>}
+      {modal && <Dimmer onClick={closeModal}/>}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
       </MainComment>
@@ -65,8 +72,8 @@ function Template ()
           <DownloadButton onClick={() => templateDownload()}>서식 다운로드</DownloadButton>
         </TemplateDownload>
         <DaD
-          comment={<span>직접 작성한 서식<br />이미지를 올려보세요</span>}
-          notice="* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요"
+          comment={<span>클릭하거나 드래그하여<br />작성한 이미지를 올려보세요</span>}
+          notice="* 크게, 똑바르게, 수정없이 작성할 수록 폰트가 이뻐집니다"
           uploadFile={uploadFile}
         />
       </TemplateMenu>

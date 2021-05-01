@@ -5,11 +5,12 @@ import Modal from '../components/DownloadModal';
 import Dimmer from '../components/Dimmer';
 import DaD from '../components/DaD';
 import { checkFileType } from '../common/utils';
-import { sendTemplateImage } from '../RESTManager';
+import { sendSentenceImage } from '../RESTManager';
 
 function Sentence ()
 {
   const [ modal, setModal ] = useState(false);
+  const [ generated, setGenerated ] = useState("");
 
   const closeModal = () => {
     setModal(false);
@@ -27,12 +28,18 @@ function Sentence ()
       alert('이미지 파일을 등록해주세요');
       return;
     }
-    sendTemplateImage(file, setModal);
+
+    sendSentenceImage(file, setGenerated);
+    if (generated === -1)
+      setGenerated("폰트 생성 실패");
+    else
+      setGenerated("폰트 생성 중");
+    setModal(true);
   };
 
   return (
     <Container>
-      {modal && <Modal/>}
+      {modal && <Modal generated={generated}/>}
       {modal && <Dimmer onClick={closeModal}/>}
       <MainComment>
         우리의 기술을 이용해 보세요!<br />아주 쉽고 빠르게 만들 수 있습니다.
@@ -41,8 +48,8 @@ function Sentence ()
       <SentenceMenu>
         <SentenceComment>50자 내외로<br />마음껏 작성하여 올려보세요.</SentenceComment>
         <DaD
-          comment={<span>마음껏 작성한 손글씨<br />이미지를 올려보세요</span>}
-          notice="* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요"
+          comment={<span>클릭하거나 드래그하여<br />이미지를 올려보세요</span>}
+          notice="* 크게, 똑바르게, 수정없이 작성할 수록 폰트가 이뻐집니다"
           uploadFile={uploadFile}
         />
       </SentenceMenu>
@@ -65,7 +72,7 @@ const SentenceMenu = styled.div`
 const SentenceComment = styled.p`
   display: inline-block;
   font-size: 25px;
-  margin-right: 50px;
+  margin-right: 100px;
 `;
 
 export default Sentence;

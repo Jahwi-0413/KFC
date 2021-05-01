@@ -3,17 +3,12 @@ import styled from 'styled-components';
 
 function DownloadModal(props)
 {
-  const [ generated, setGenerated ] = useState(false);
+  const [ generated, setGenerated ] = useState(props.generated);
 
   return (
     <Container>
       <PopUp>
-        <Comment>{
-          generated ?
-          "폰트 생성 완료"
-          :
-          "폰트 생성 중"
-        }</Comment>
+        <Comment>{generated}</Comment>
       </PopUp>
     </Container>
   );

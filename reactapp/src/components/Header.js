@@ -1,13 +1,14 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function Header ()
 {
   return (
     <Container>
-      <div>
+      <Link style={{ textDecoration: 'none' }} to='/'>
         <Title href="/">KFC</Title>
         <SubTitle href="/">Kaligraphy Font Creator</SubTitle>
-      </div>
+      </Link>
     </Container>
   )
 }
