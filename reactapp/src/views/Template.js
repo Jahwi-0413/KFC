@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import template from '../resources/28-template.jpg'
+import Loader from '../components/Loader';
+import Modal from '../components/DownloadModal';
+import Dimmer from '../components/Dimmer';
+import template from '../resources/48-template.jpg';
 import DaD from '../components/DaD';
+import { checkFileType } from '../common/utils';
+import { sendTemplateImage } from '../RESTManager';
 
 function Template ()
 {
+  const [ modal, setModal ] = useState(false);
+  // const [ loaded, setLoaded ] = useState(false);
+
+  // useEffect(() => {
+  //   const image = new Image();
+    
+  //   image.src = template;
+  //   // image.onload = () => {
+  //   //   setLoaded(true);
+  //   // }
+
+  //   setTimeout(() => setLoaded(true), 100);
+  // }, []);
+
+  const closeModal = () => {
+    setModal(false);
+  };
   const templateDownload = () =>
   {
     var element = document.createElement("a");
@@ -13,9 +35,26 @@ function Template ()
     element.download = "템플릿.jpg";
     element.click();
   };
+  const uploadFile = (file) =>
+  {
+    const checkResult = checkFileType(file, ['jpg', 'png']);
+    if (file === null)
+    {
+      alert('파일을 등록해주세요');
+      return;
+    }
+    if (!checkResult)   //ttf 파일이 아니라면
+    {
+      alert('이미지 파일을 등록해주세요');
+      return;
+    }
+    sendTemplateImage(file, setModal);
+  };
 
   return (
     <Container>
+      {modal && <Modal/>}
+      {modal && <Dimmer onClick={closeModal}></Dimmer>}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
       </MainComment>
@@ -25,8 +64,11 @@ function Template ()
           <TemplateImage src={template} />
           <DownloadButton onClick={() => templateDownload()}>서식 다운로드</DownloadButton>
         </TemplateDownload>
-        <DaD comment={<span>직접 작성한 서식<br />이미지를 올려보세요</span>}
-          notice={'* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요'} />
+        <DaD
+          comment={<span>직접 작성한 서식<br />이미지를 올려보세요</span>}
+          notice="* 글자 수정없이 잘 보이도록 캡처된 이미지만 올려주세요"
+          uploadFile={uploadFile}
+        />
       </TemplateMenu>
     </Container>
   );

@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { sendFontFile } from '../RESTManager'
-import EditorModal from '../components/EditorModal'
-import DaD from '../components/DaD'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+import EditorModal from '../components/EditorModal';
+import Dimmer from '../components/Dimmer';
+import DaD from '../components/DaD';
+import { checkFileType } from '../common/utils';
+import { sendFontFile } from '../RESTManager';
 
 function Editor (props)
 {
   const comment = "손글씨 파일을 올려보세요";
   const notice = ".ttf 확장자의 파일만 업로드 가능합니다.";
-  const [modalState, setModalState] = useState(false);  //false가 닫힌거
+  const [ modalState, setModalState ] = useState(false);  //false가 닫힌거
 
+  const closeModal = () => {
+    setModalState(false);
+  };
   const uploadFile = (file) =>
   {
-    const checkResult = checkFileType(file);
+    const checkResult = checkFileType(file, ['ttf']);
     if (file === null)
     {
       alert('파일을 등록해주세요');
@@ -24,17 +30,12 @@ function Editor (props)
       return
     }
     sendFontFile(file, setModalState);
-
   };
-
-  const checkFileType = (file) =>
-  {
-    const type = file.name.slice(-3)
-    return (type === 'ttf' ? true : false) //파일 타입이 ttf라면 true
-  }
 
   return (
     <Container>
+      {modalState && <EditorModal/>}
+      {modalState && <Dimmer onClick={closeModal}></Dimmer>}
       <Text>
         나만의 손글씨로<br />
             편리하게 편지를 작성해보세요<br /><br />
@@ -43,28 +44,23 @@ function Editor (props)
       </Text>
       <StyledDiv>
         <DaD comment={<span>{comment}</span>} notice={notice} uploadFile={uploadFile} />
-        {modalState ? <EditorModal /> : null}
       </StyledDiv>
     </Container >
   )
 };
 
 const Container = styled.div`
-    margin-top: 60px;
-    display:table;
-    margin-left:auto;
-    margin-right:auto;
+  text-align: center;
 `;
 const Text = styled.div`
   font-size: 25px;
-  display:block;
-  display:table-row;
 `;
-
 const StyledDiv = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
   margin-top:30px;
-`
+  margin-bottom: 60px;
+`;
+
 export default Editor;
