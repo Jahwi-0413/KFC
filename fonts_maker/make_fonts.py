@@ -19,10 +19,9 @@ rst_svg_path = './result/KFC-200000/svg/'
 rst_json_name = 'result.json'
 rst_font_path = 'result.ttf'
 
-if __name__ == '__main__':
+def make_font():
     start_time = time.time()
     
-    freeze_support()
     transparent.transparent_img(hw_pic_path, hw_transparent_path)
     flag = make_svg.gen_svg(hw_transparent_path, hw_svg_path)
 
@@ -56,3 +55,8 @@ if __name__ == '__main__':
     os.system("fontforge -script svgs2ttf.py result.json")
 
     print("total %s sec" % (time.time() - start_time))
+
+    return 'D:/KFC/KFC/fonts_maker/' + rst_font_path
+
+if __name__ == "__main__":
+    make_font()

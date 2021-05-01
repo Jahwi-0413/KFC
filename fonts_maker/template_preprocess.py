@@ -129,58 +129,44 @@ def centering_image(img, image_size=128, verbose=False, resize_fix=False, pad_va
     
     return centered_image
 
-# 28자 전용
-# char_list = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣']
+# template_path 는 파일 들어가는 경로까지만, first & second pic name에는 파일 이름이랑 확장자만
+def template_process(template_path = './ori_handwriting/', pic_name = 'test.jpg'):
+    # 28자 전용
+    # char_list = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣']
 
-# 48자 전용
-char_list_1 = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣', '괗', '꽅']
-char_list_2 = ['녳', '뎢', '뗐', '럿', '먭', '뱛', '뺊', '삸', '싧', '씕', '읃', '쥲', '쮠', '췏', '쿽', '툫', '푚', '횈']
+    # 48자 전용
+    char_list = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣', '괗', '꽅', '녳', '뎢', '뗐', '럿', '먭', '뱛', '뺊', '삸', '싧', '씕', '읃', '쥲', '쮠', '췏', '쿽', '툫', '푚', '횈']
 
-temp_img = cv2.imread('./ori_handwriting/test1.png', flags = cv2.IMREAD_GRAYSCALE)
-kernel = np.ones((2, 2), np.uint8)
-temp_img = cv2.erode(temp_img, kernel, iterations=1)
+    SAVE_PATH = "./ori_handwriting/centered_pic/"
 
-crop_range = int(temp_img.shape[0] / 10)
-margin = int(crop_range / 10)
+    # 첫번째 페이지
+    temp_img = cv2.imread(template_path + pic_name, flags = cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((4, 4), np.uint8)
+    temp_img = cv2.erode(temp_img, kernel, iterations=1)
 
-SAVE_PATH = "./ori_handwriting/centered_pic/"
+    crop_range = int(temp_img.shape[0] / 12)
+    margin = int(crop_range / 10)
 
-for i, char in enumerate(char_list_1):
-    crop_img = np.zeros((crop_range, crop_range))
-    if i % 3 == 0:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
-    elif i % 3 == 1:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
-    else:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 5 * crop_range + margin : -margin]
+    # crop and centering
+    for i, char in enumerate(char_list):
+        crop_img = np.zeros((crop_range, crop_range))
+        if i % 4 == 0:
+            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
+        elif i % 4 == 1:
+            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
+        elif i % 4 == 2:
+            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 5 * crop_range + margin : 6 * crop_range - margin]
+        else:
+            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 7 * crop_range + margin : -margin]
+        
+        crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+        ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
+        crop_img = centering_image(crop_img, verbose=False, pad_value=255)
+        char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
+
+        cv2.imwrite(SAVE_PATH + char_code + '.png', crop_img)
     
-    crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
-    ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
-    crop_img = centering_image(crop_img, verbose=True, pad_value=255)
-    print(char)
-    char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
+    return True
 
-    cv2.imwrite(SAVE_PATH + char_code + '.png', crop_img)
-
-temp_img = cv2.imread('./ori_handwriting/test2.png', flags = cv2.IMREAD_GRAYSCALE)
-temp_img = cv2.erode(temp_img, kernel, iterations=1)
-
-crop_range = int(temp_img.shape[0] / 10)
-margin = int(crop_range / 10)
-
-for i, char in enumerate(char_list_2):
-    crop_img = np.zeros((crop_range, crop_range))
-    if i % 3 == 0:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
-    elif i % 3 == 1:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
-    else:
-        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 5 * crop_range + margin : -margin]
-    
-    # crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
-    ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
-    crop_img = centering_image(crop_img, verbose=True, pad_value=255)
-    print(char)
-    char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
-
-    cv2.imwrite(SAVE_PATH + char_code + '.png', crop_img)
+if __name__ == "__main__":
+    template_process()
