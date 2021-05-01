@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-function Header()
+function Header ()
 {
   return (
     <Container>
@@ -14,7 +14,7 @@ function Header()
 
 const Container = styled.header`
   display: flex;
-  height: 500px;
+  height: 300px;
   justify-content: center;
   align-items: center;
   background-color: #E74C3C;
