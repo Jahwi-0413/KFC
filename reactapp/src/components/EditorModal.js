@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import '../index.css'
 
-function EditorModal (props)
+function EditorModal ()
 {
   const closeModal = () =>
   {
@@ -19,24 +19,28 @@ function EditorModal (props)
     </Container>
   )
 }
+// width: 50rem;
+//   height:48rem;
 
-const Container = styled.div`
-  width: 600px;
-  height:800px;
-  margin-top:-500px;
+const Container = styled.div` 
+  width: 35rem;
+  height:48rem;
+  margin-top:-25rem;
   display: flex;
   background-color:white;
-  justify-content: center;
   align-items: center;
   position: fixed;
   border:1px solid black;
 `
 
 const StyledArea = styled.textarea`
-  width:500px;
-  height:700px;
+  width:30rem;
+  height:45rem;
   font-size:20px;
   font-family:testfont;
+  position:relative;
+  left:20px;
+  outline:0;
 `
 const BtnPosition = styled.div`
   position:absolute;
