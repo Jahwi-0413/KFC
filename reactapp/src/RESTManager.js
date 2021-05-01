@@ -22,7 +22,7 @@ export const sendFontFile = (file, callback) =>      //사용자가 입력한 tt
 export const sendTemplateImage = (file, callback) =>      //사용자가 입력한 ttf 파일을 서버로 전송
 {
   const formData = new FormData();
-  formData.append('file_name', file);
+  formData.append('file', file);
   axios.post('/api/resTemplate/', formData, {
     header: {
       'content-type': 'multipart/form-data',
@@ -41,7 +41,7 @@ export const sendTemplateImage = (file, callback) =>      //사용자가 입력�
 export const sendSentenceImage = (file, callback) =>      //사용자가 입력한 ttf 파일을 서버로 전송
 {
   const formData = new FormData();
-  formData.append('file_name', file);
+  formData.append('file', file);
   axios.post('/api/resSentence/', formData, {
     header: {
       'content-type': 'multipart/form-data',

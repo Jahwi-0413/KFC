@@ -8,7 +8,6 @@ from . import FileManager as fm
 @csrf_exempt
 def getTtfFile(request):
   file = request.FILES['ttf_file']
-  print(file)
   fm.handle_ttf_file(file)
   response = HttpResponse("ok")
   response.status_code = 200
@@ -17,8 +16,8 @@ def getTtfFile(request):
 @require_POST
 @csrf_exempt
 def getTemplateImage(request):
-  file = request.FILES['file_name']
-  print(file)
+  file = request.FILES['file']
+  fm.save_image_file(file)
   response = HttpResponse("ok")
   response.status_code = 200
   return response
@@ -26,8 +25,8 @@ def getTemplateImage(request):
 @require_POST
 @csrf_exempt
 def getSentenceImage(request):
-  file = request.FILES['file_name']
-  print(file)
+  file = request.FILES['file']
+  fm.save_image_file(file)
   response = HttpResponse("ok")
   response.status_code = 200
   return response
