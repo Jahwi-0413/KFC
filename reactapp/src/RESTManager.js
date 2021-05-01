@@ -4,10 +4,9 @@ import FormData from 'form-data'
 axios.defaults.baseURL = 'http://localhost:8000';
 const sendFontFile = (file, callback) =>      //사용자가 입력한 ttf 파일을 서버로 전송
 {
-
   const formData = new FormData();
   formData.append('ttf_file', file);
-  axios.post('/getTtfFile/', formData, {
+  axios.post('/api/', formData, {
     header: {
       'content-type': 'multipart/form-data',
       'Access-Control-Allow-Origin': '*',
