@@ -104,7 +104,7 @@ def setup_args_and_config():
 
 def setup_language_dependent(cfg):
     if cfg['language'] == 'kor':
-        content_font = "UhBee swit.ttf"
+        content_font = "NanumGothic.ttf"
         n_comp_types = 3  # cho, jung, jong
         n_comps = kor.N_COMPONENTS
     elif cfg['language'] == 'thai':

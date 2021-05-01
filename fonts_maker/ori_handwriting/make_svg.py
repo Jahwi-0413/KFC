@@ -233,14 +233,9 @@ def gen_svg(trans_path, save_path):
         
     start_time = time.time()
 
-    if(len(PIC_LIST) >= 1000):
-        sub = int(len(PIC_LIST) / 8)
+    sub = int(len(PIC_LIST) / 4)
 
-        lists = [ PIC_LIST[:sub], PIC_LIST[sub:2*sub], PIC_LIST[2*sub:3*sub], PIC_LIST[3*sub:4*sub], PIC_LIST[4*sub:5*sub], PIC_LIST[5*sub:6*sub], PIC_LIST[6*sub:7*sub], PIC_LIST[7*sub:] ]
-    else:
-        sub = int(len(PIC_LIST) / 4)
-
-        lists = [ PIC_LIST[:sub], PIC_LIST[sub:2*sub], PIC_LIST[2*sub:3*sub], PIC_LIST[3*sub:] ]
+    lists = [ PIC_LIST[:sub], PIC_LIST[sub:2*sub], PIC_LIST[2*sub:3*sub], PIC_LIST[3*sub:] ]
 
     procs = []
 
