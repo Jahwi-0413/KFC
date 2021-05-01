@@ -9,7 +9,8 @@ function DaD (props)
   const onDrop = useCallback(acceptedFiles =>
   {
     const file = acceptedFiles[0]
-    props.uploadFile(file)
+    if (props.uploadFile !== null && props.uploadFile !== undefined)
+      props.uploadFile(file)
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 

@@ -1,8 +1,9 @@
 import os
 
-# os.chdir('../../') #작업경로 바꾸는 명령어인데 안먹힘
-base_dir = 'D:/4학년 1학기/창융2/sc/kfcproject/reactapp/src/resources/fonts'#상대경로가 안먹혀서..
-def handle_ttf_file(file, test=False):  
+from .pathfinder import path
+
+def handle_ttf_file(file, test=False):
+  base_dir = os.path.join(path(), 'reactapp\\src\\resources\\fonts')
   save_path = os.path.join(base_dir, file.name)
 
   with open(save_path, 'wb+') as destination:
