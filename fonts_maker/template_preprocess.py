@@ -108,33 +108,79 @@ def add_padding(img, image_size=128, verbose=False, pad_value=None):
 
 
 def centering_image(img, image_size=128, verbose=False, resize_fix=False, pad_value=None):
+    if img.shape[0] < img.shape[1]:
+        img = cv2.resize(img, dsize=(img.shape[1], img.shape[1]), interpolation=cv2.INTER_CUBIC)
+    else:
+        img = cv2.resize(img, dsize=(img.shape[0], img.shape[0]), interpolation=cv2.INTER_CUBIC)
+
     if not pad_value:
         pad_value = img[0][0]
     cropped_image = tight_crop_image(img, verbose=verbose, resize_fix=resize_fix)
+    # x, y = cropped_image.shape[0], cropped_image.shape[1]
+
+    # if x >= y:
+    #     diff = 128 / x
+    #     centered_image = cv2.resize(cropped_image, dsize=(int(diff * y), 128), interpolation=cv2.INTER_CUBIC)
+    # else:
+    #     diff = 128 / y
+    #     centered_image = cv2.resize(cropped_image, dsize=(128, int(diff * x)), interpolation=cv2.INTER_CUBIC)
+
     centered_image = add_padding(cropped_image, image_size=image_size, verbose=verbose, pad_value=pad_value)
     
     return centered_image
 
-char_list = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣']
+# 28자 전용
+# char_list = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣']
 
-temp_img = cv2.imread('./ori_handwriting/test.png', flags = cv2.IMREAD_GRAYSCALE)
+# 48자 전용
+char_list_1 = ['가', '깩', '냒', '댻', '떤', '렍', '멶', '볟', '뽈', '솱', '쐚', '욃', '죬', '쭕', '춾', '퀧', '튐', '퓹', '흢', '긧', '낐', '낭', '댖', '땿', '럨', '멑', '벺', '뼣', '괗', '꽅']
+char_list_2 = ['녳', '뎢', '뗐', '럿', '먭', '뱛', '뺊', '삸', '싧', '씕', '읃', '쥲', '쮠', '췏', '쿽', '툫', '푚', '횈']
+
+temp_img = cv2.imread('./ori_handwriting/test1.png', flags = cv2.IMREAD_GRAYSCALE)
+kernel = np.ones((2, 2), np.uint8)
+temp_img = cv2.erode(temp_img, kernel, iterations=1)
+
 crop_range = int(temp_img.shape[0] / 10)
+margin = int(crop_range / 10)
 
 SAVE_PATH = "./ori_handwriting/centered_pic/"
 
-for i, char in enumerate(char_list):
+for i, char in enumerate(char_list_1):
     crop_img = np.zeros((crop_range, crop_range))
     if i % 3 == 0:
-        crop_img = temp_img[int(i / 3) * crop_range + 5 : (int(i / 3) + 1) * crop_range - 5, crop_range + 5 : 2 * crop_range - 5]
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
     elif i % 3 == 1:
-        crop_img = temp_img[int(i / 3) * crop_range + 5 : (int(i / 3) + 1) * crop_range - 5, 3 * crop_range + 5 : 4 * crop_range - 5]
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
     else:
-        crop_img = temp_img[int(i / 3) * crop_range + 5 : (int(i / 3) + 1) * crop_range - 5, 5 * crop_range + 5 : -5]
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 5 * crop_range + margin : -margin]
     
     crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
+    crop_img = centering_image(crop_img, verbose=True, pad_value=255)
+    print(char)
+    char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
 
-    crop_img = centering_image(crop_img, verbose=False, pad_value=255)
+    cv2.imwrite(SAVE_PATH + char_code + '.png', crop_img)
 
+temp_img = cv2.imread('./ori_handwriting/test2.png', flags = cv2.IMREAD_GRAYSCALE)
+temp_img = cv2.erode(temp_img, kernel, iterations=1)
+
+crop_range = int(temp_img.shape[0] / 10)
+margin = int(crop_range / 10)
+
+for i, char in enumerate(char_list_2):
+    crop_img = np.zeros((crop_range, crop_range))
+    if i % 3 == 0:
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
+    elif i % 3 == 1:
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
+    else:
+        crop_img = temp_img[int(i / 3) * crop_range + margin : (int(i / 3) + 1) * crop_range - margin, 5 * crop_range + margin : -margin]
+    
+    # crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
+    crop_img = centering_image(crop_img, verbose=True, pad_value=255)
+    print(char)
     char_code = char.encode('raw_unicode_escape').decode('utf-8')[2:].upper()
 
     cv2.imwrite(SAVE_PATH + char_code + '.png', crop_img)
