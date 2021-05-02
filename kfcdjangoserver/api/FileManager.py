@@ -1,7 +1,12 @@
 import os
 from .pathfinder import path
 import sys
-sys.path.append('D:/4학년 1학기/창융2/sc/kfcproject/fonts_maker') #font_maker
+
+sys_path = sys.path
+font_maker_path = 'D:/4학년 1학기/창융2/sc/kfcproject/fonts_maker'    
+if font_maker_path not in sys_path: # fonts_maker가 sys.path에 없을경우 추가
+  sys.path.append(font_maker_path)
+  
 import font_maker
 import shutil
 
