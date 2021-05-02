@@ -1,6 +1,9 @@
 import os
-
 from .pathfinder import path
+import sys
+sys.path.append('D:/4학년 1학기/창융2/sc/kfcproject/fonts_maker') #font_maker
+import font_maker
+import shutil
 
 def handle_ttf_file(file, test=False):
   base_dir = os.path.join(path(), 'reactapp\\src\\resources\\fonts')
@@ -25,8 +28,17 @@ def save_image_file(file):
       destination.write(chunk)
     
   ext = (file.name)[::-1][0:3][::-1] # 확장자 자르기
-  savedFile = base_dir + '/1.' + ext
-  os.rename(savedFile, base_dir + '/1_used.' + ext)
-  removeFile = base_dir + '/1_used.' + ext
-  os.rename(save_path, savedFile)
-  os.remove(removeFile)
+  # savedFile = base_dir + '/1.' + ext
+  # os.rename(savedFile, base_dir + '/1_used.' + ext)
+  # removeFile = base_dir + '/1_used.' + ext
+  # os.rename(save_path, savedFile)
+  # os.remove(removeFile)
+  return file.name
+
+def save_ttf_file(imagename):
+  font_file_path = font_maker.font_make('/uploads/', imagename) #결과 파일 경로
+
+  base_dir = os.path.join(path(), 'reactapp\\src\\resources\\resultfonts')
+  saved_file = os.path.join(base_dir, 'font-file.ttf')
+  os.remove(saved_file) #원래 있던 font_file.ttf 삭제
+  shutil.move(font_file_path, base_dir + '\\' + 'font-file.ttf')

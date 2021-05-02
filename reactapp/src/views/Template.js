@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Loader from '../components/Loader';
 import Modal from '../components/DownloadModal';
+import Modal2 from '../components/DownloadModal2';
 import Dimmer from '../components/Dimmer';
 import template from '../resources/48-template.jpg';
 import DaD from '../components/DaD';
@@ -11,13 +12,13 @@ import { sendTemplateImage } from '../RESTManager';
 
 function Template ()
 {
-  const [ modal, setModal ] = useState(false);
-  const [ generated, setGenerated ] = useState("");
+  const [modal, setModal] = useState(false);
+  const [generated, setGenerated] = useState("");
   // const [ loaded, setLoaded ] = useState(false);
 
   // useEffect(() => {
   //   const image = new Image();
-    
+
   //   image.src = template;
   //   // image.onload = () => {
   //   //   setLoaded(true);
@@ -26,7 +27,8 @@ function Template ()
   //   setTimeout(() => setLoaded(true), 100);
   // }, []);
 
-  const closeModal = () => {
+  const closeModal = () =>
+  {
     setModal(false);
   };
   const templateDownload = () =>
@@ -36,6 +38,12 @@ function Template ()
     element.download = "템플릿.jpg";
     element.click();
   };
+
+  const setProps = (result) =>
+  {
+    if (result === false) setGenerated("폰트 생성 실패");
+    else setGenerated("폰트 생성 완료");
+  }
   const uploadFile = (file) =>
   {
     const checkResult = checkFileType(file, ['jpg', 'png']);
@@ -49,19 +57,16 @@ function Template ()
       alert('이미지 파일을 등록해주세요');
       return;
     }
-
-    sendTemplateImage(file, setGenerated);
-    if (generated === -1)
-      setGenerated("폰트 생성 실패");
-    else
-      setGenerated("폰트 생성 중");
+    setGenerated('폰트 생성 중');
+    sendTemplateImage(file, setProps);
     setModal(true);
   };
 
   return (
     <Container>
-      {modal && <Modal generated={generated}/>}
-      {modal && <Dimmer onClick={closeModal}/>}
+      {modal && generated === "폰트 생성 중" && <Modal generated={generated} />}
+      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated} />}
+      {modal && <Dimmer onClick={closeModal} />}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
       </MainComment>

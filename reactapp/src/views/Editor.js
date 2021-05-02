@@ -11,9 +11,10 @@ function Editor (props)
 {
   const comment = <span>클릭하거나 드래그하여<br />폰트 파일을 올려보세요</span>;
   const notice = "* .ttf 확장자의 파일만 업로드 가능합니다";
-  const [ modalState, setModalState ] = useState(false);  //false가 닫힌거
+  const [modalState, setModalState] = useState(false);  //false가 닫힌거
 
-  const closeModal = () => {
+  const closeModal = () =>
+  {
     setModalState(false);
   };
   const uploadFile = (file) =>
@@ -34,7 +35,7 @@ function Editor (props)
 
   return (
     <Container>
-      {modalState && <EditorModal/>}
+      {modalState && <EditorModal />}
       {modalState && <Dimmer onClick={closeModal}></Dimmer>}
       <Text>
         나만의 손글씨로<br />
