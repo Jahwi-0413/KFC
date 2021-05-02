@@ -1,6 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import '../index.css'
+import React from 'react';
+import styled from 'styled-components';
+
+import '../index.css';
 
 function EditorModal ()
 {
@@ -10,10 +11,8 @@ function EditorModal ()
         <StyledArea/>
       </Container>
     </Temp>
-  )
+  );
 }
-// width: 50rem;
-//   height:48rem;
 
 const Temp = styled.div`
   position: absolute;
@@ -39,7 +38,7 @@ const Container = styled.div`
 const StyledArea = styled.textarea`
   width: 90%;
   height: 90%;
-  font-size: 20px;
+  font-size: 30px;
   font-family: testfont;
   outline: 0;
 `;
