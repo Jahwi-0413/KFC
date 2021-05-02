@@ -141,7 +141,7 @@ def template_process(template_path = './ori_handwriting/', pic_name = 'test.jpg'
 
     # 첫번째 페이지
     temp_img = cv2.imread(template_path + pic_name, flags = cv2.IMREAD_GRAYSCALE)
-    kernel = np.ones((4, 4), np.uint8)
+    kernel = np.ones((3, 3), np.uint8)
     temp_img = cv2.erode(temp_img, kernel, iterations=1)
 
     crop_range = int(temp_img.shape[0] / 12)

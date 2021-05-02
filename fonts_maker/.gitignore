@@ -5,8 +5,7 @@ runs
 runs/
 
 # test data
-NanumBarunpenR.ttf
-result.ttf
+*.ttf
 result/
 original.json
 result.json

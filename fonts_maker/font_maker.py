@@ -4,7 +4,7 @@ from multiprocessing import freeze_support
 import os
 
 # 템플릿 사진 경로랑 파일명을 받고 생성 된 폰트 절대경로를 반환
-def font_make(template_path = './ori_handwriting/', pic_name = 'test.jpg'):
+def font_make(template_path = './ori_handwriting/', pic_name = 'test.png'):
     PATH = os.getcwd()
 
     os.chdir('D:/KFC/KFC/fonts_maker')
