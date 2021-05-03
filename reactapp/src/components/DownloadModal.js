@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import file from '../resources/resultfonts/font-file.ttf'
+import { CircularProgress } from '@material-ui/core';
 
 function DownloadModal (props)
 {
@@ -10,8 +10,8 @@ function DownloadModal (props)
     <Container>
       <PopUp>
         <Comment>{generated}</Comment>
+        <CircularProgress color="secondary" />
       </PopUp>
-
     </Container>
   );
 }
@@ -28,6 +28,7 @@ const Container = styled.div`
 `;
 const PopUp = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 300px;
@@ -37,6 +38,7 @@ const PopUp = styled.div`
 `;
 const Comment = styled.div`
   display:block;
+  margin-bottom: 15px;
 `;
 
 export default DownloadModal;
