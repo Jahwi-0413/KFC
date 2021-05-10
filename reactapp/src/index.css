@@ -16,3 +16,45 @@ code {
   font-family: 'testfont';
   src: url('./resources/fonts/1.ttf') format('woff');
 }
+
+textarea.background1 {
+  font-size: 20px;
+  background-image: linear-gradient(to right, white 10px, transparent 10px),
+    linear-gradient(to left, white 10px, transparent 10px),
+    repeating-linear-gradient(
+      white,
+      white 30px,
+      #ccc 30px,
+      #ccc 31px,
+      white 31px
+    );
+  line-height: 31px;
+}
+
+textarea.background2 {
+  font-size: 28px;
+  background-image: linear-gradient(to right, white 10px, transparent 10px),
+    linear-gradient(to left, white 10px, transparent 10px),
+    repeating-linear-gradient(
+      white,
+      white 35px,
+      #ccc 37px,
+      #ccc 31px,
+      white 31px
+    );
+  line-height: 37px;
+}
+
+textarea.background3 {
+  font-size: 35px;
+  background-image: linear-gradient(to right, white 10px, transparent 10px),
+    linear-gradient(to left, white 10px, transparent 10px),
+    repeating-linear-gradient(
+      white,
+      white 42px,
+      #ccc 44px,
+      #ccc 31px,
+      white 31px
+    );
+  line-height: 44px;
+}
