@@ -17,7 +17,7 @@ def getTtfFile(request):
 def getTemplateImage(request):
   file = request.FILES['file']
   filename = fm.save_image_file(file)
-  fm.save_ttf_file(file)
+  fm.save_ttf_file(filename)
   response = HttpResponse("ok")
   response.status_code = 200
   return response
