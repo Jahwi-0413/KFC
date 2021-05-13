@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import fontSizeIcon from '../resources/format-size.svg'
 
 import '../index.css';
 
@@ -28,10 +29,16 @@ function EditorModal ()
   return (
     <Temp>
       <Container>
-        <TextAreaWrapper>
-          <StyledArea className={fsType} />
-        </TextAreaWrapper>
-        <button type="button" onClick={changeFsType}>fontsize</button>
+        <StyledSpan>
+          <TextAreaWrapper>
+            <StyledArea className={fsType} />
+          </TextAreaWrapper>
+          <ButtonWrapper>
+            <FontSizeBtn type="button" onClick={changeFsType}>
+              <img src={fontSizeIcon} />
+            </FontSizeBtn>
+          </ButtonWrapper>
+        </StyledSpan>
       </Container>
     </Temp>
   );
@@ -53,30 +60,50 @@ const Container = styled.div`
   width: 38rem;
   height: 90%;
   background: white;
-  
   border:1px solid black;
   z-index: 201;
 `;
 
 // justify-content: center;
 // align-items: center;
+const StyledSpan = styled.span`
+  width:100%;
+  height:100%;
+`
 const TextAreaWrapper = styled.div`
-  width: 70%;
-  height: 90%;
+  width: fit-content;
+  height: 100%;
   font-size: 30px;
   font-family: testfont;
   outline: 0;
-  position:relative;
-  left:20px;
-  top:20px;
+  float: left;
+  border:1px solid red;
+  top:30px;
 `
 const StyledArea = styled.textarea`
-  width:100%;
-  height:100%;
+  width:28rem;
+  height:40rem;
   font-family: testfont;
   background-attachment: local;
   padding: 8px 10px;
   resize:none;
 `;
+
+const ButtonWrapper = styled.div`
+  width:3rem;
+  height:100%;
+  float:right;
+  position:relative;
+  right:0;
+`
+
+const FontSizeBtn = styled.button`
+  width:50px;
+  height:50px;
+  background:white;
+  border:0;
+  left:0px;
+  position:relative;
+`
 
 export default EditorModal
