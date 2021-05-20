@@ -25,6 +25,7 @@ function EditorModal ()
     3: 'left',
     4: 'right'
   }
+
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
   const [justifyIcon, setJustifyIcon] = useState('justify')
@@ -122,6 +123,7 @@ const StyledArea = styled.textarea`
   background-attachment: local;
   padding: 8px 10px;
   resize:none;
+  overflow:hidden;
 `;
 
 const ButtonWrapper = styled.div`
