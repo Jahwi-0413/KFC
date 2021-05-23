@@ -26,9 +26,16 @@ function EditorModal ()
     4: 'right'
   }
 
+  const arrow1 = '<'
+  const arrow2 = '>'
+  const [pageNum, setPageNum] = useState(1)   //현재 보이는 페이지
+  const [pageCount, setPageCount] = useState(1)
+  const [pageText, setPageText] = useState('')
+  const [texts, setTexts] = useState([])
+
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
-  const [justifyIcon, setJustifyIcon] = useState('justify')
+  // const [justifyIcon, setJustifyIcon] = useState('justify')
 
   const changeFsType = () =>
   {
@@ -58,12 +65,53 @@ function EditorModal ()
         break;
     }
   }
+
+  const nextPage = (e) =>
+  {
+    if (pageCount > pageNum)
+    {
+      setPageNum(pageNum + 1)
+      //현재 페이지 저장
+      // setPageText(e.value)
+      // const t = texts
+      // t.push(pageText)
+      // Object.assign(texts, t)
+      // setTexts(t)
+      setPageText(texts[pageNum - 1])//다음 페이지 불러오기
+      return
+    }
+    //다음 페이지가 없는 경우
+    alert('다음 페이지가 없습니다')
+  }
+  const prevPage = (e) =>
+  {
+    if (pageNum === 1)
+    {
+      alert('첫 페이지 입니다')
+      return
+    }
+    setPageNum(pageNum - 1)
+    setPageText(e.value)//현재 페이지 내용 저장
+
+    setPageText(texts[pageNum - 1]) //이전 페이지 내용 불러오기
+
+  }
+
+  const addPage = () =>
+  {
+    setPageCount(pageCount + 1)
+    //현재 페이지 내용 저장
+  }
+
   return (
     <Temp>
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
-            <StyledArea className={fsType} style={{ textAlign: textJustify }} />
+            <StyledArea className={fsType} style={{ textAlign: textJustify }}>{pageText}</StyledArea>
+            <PrevBtn onClick={prevPage}>{arrow1}</PrevBtn>
+            <PageNum>{pageNum}</PageNum>
+            <NextBtn onClick={nextPage}>{arrow2}</NextBtn>
           </TextAreaWrapper>
           <ButtonWrapper>
             <FontSizeBtn type="button" onClick={changeFsType}>
@@ -72,6 +120,7 @@ function EditorModal ()
             <TextJustifyBtn type="button" onClick={changeJustifyType}>
               <Img src={justify} />
             </TextJustifyBtn>
+            <AddPageBtn onClick={addPage}>편지지 추가</AddPageBtn>
           </ButtonWrapper>
         </StyledSpan>
       </Container>
@@ -112,7 +161,6 @@ const TextAreaWrapper = styled.div`
   font-family: testfont;
   outline: 0;
   float: left;
-  border:1px solid red;
   margin-top:30px;
   margin-left:30px;
 `
@@ -124,6 +172,7 @@ const StyledArea = styled.textarea`
   padding: 8px 10px;
   resize:none;
   overflow:hidden;
+  display:block;
 `;
 
 const ButtonWrapper = styled.div`
@@ -132,7 +181,7 @@ const ButtonWrapper = styled.div`
   float:right;
   position:relative;
   right:0;
-  margin-right:30px;
+  margin-right:40px;
   margin-top:30px;
 `
 const Button = styled.button`
@@ -144,12 +193,43 @@ const Button = styled.button`
 
 const FontSizeBtn = styled(Button)`
   position:relative;
+  display:inline;
 `
 const TextJustifyBtn = styled(Button)`
+  display:inline;
 `
 const Img = styled.img`
   width: 50px;
   hiehgt:50px;
+`
+
+const BlueBtn = styled(Button)`
+  border:1px solid #57b6ff;
+  background-color:#57b6ff;
+  color:white;
+`
+const PrevBtn = styled(Button)`
+  font-size:25px;
+  width:40px;
+  height:40px;
+  display:inline;
+  margin-top:20px;
+`
+
+const NextBtn = styled(PrevBtn)`
+`
+
+const PageNum = styled.span`
+  margin-left:20px;
+  margin-right:20px;
+`
+
+const AddPageBtn = styled(BlueBtn)`
+  font-size:16px;
+  width: 100px;
+  height:50px;
+  box-shadow: 4px 4px 4px 2px #a39a99;
+  margin-top:20px;
 `
 
 export default EditorModal
