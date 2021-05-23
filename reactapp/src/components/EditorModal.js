@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import fontSizeIcon from '../resources/format-size.svg'
 
@@ -29,9 +29,10 @@ function EditorModal ()
   const arrow1 = '<'
   const arrow2 = '>'
   const [pageNum, setPageNum] = useState(1)   //현재 보이는 페이지
-  const [pageCount, setPageCount] = useState(1)
+  // const [pageCount, setPageCount] = useState(1)
+  const pageCount = useRef(1)
   const [pageText, setPageText] = useState('')
-  const [texts, setTexts] = useState([])
+  const texts = useRef([])
 
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
@@ -66,41 +67,50 @@ function EditorModal ()
     }
   }
 
-  const nextPage = (e) =>
+  const nextPage = () =>
   {
-    if (pageCount > pageNum)
+    console.log('pageNum : ' + pageNum);
+    if (pageCount.current > pageNum)  //다음 페이지가 있는 경우
     {
+      texts.current[pageNum - 1] = ''
+      texts.current[pageNum - 1] = pageText //현재 페이지 내용 저장
+      // setPageText('')
+      setPageText(texts.current[pageNum])//다음 페이지 불러오기
       setPageNum(pageNum + 1)
-      //현재 페이지 저장
-      // setPageText(e.value)
-      // const t = texts
-      // t.push(pageText)
-      // Object.assign(texts, t)
-      // setTexts(t)
-      setPageText(texts[pageNum - 1])//다음 페이지 불러오기
       return
     }
     //다음 페이지가 없는 경우
     alert('다음 페이지가 없습니다')
   }
-  const prevPage = (e) =>
+  const prevPage = () =>
   {
     if (pageNum === 1)
     {
       alert('첫 페이지 입니다')
       return
     }
+    texts.current[pageNum - 1] = ''
+    texts.current[pageNum - 1] = pageText //현재 페이지 내용 저장
+    setPageText(texts.current[pageNum - 2]) //이전 페이지 내용 불러오기
     setPageNum(pageNum - 1)
-    setPageText(e.value)//현재 페이지 내용 저장
-
-    setPageText(texts[pageNum - 1]) //이전 페이지 내용 불러오기
-
   }
 
   const addPage = () =>
   {
-    setPageCount(pageCount + 1)
-    //현재 페이지 내용 저장
+    texts.current.forEach(i => console.log(i))
+    if (pageCount.current === pageNum)    //현재가 있는 페이지중 마지막일 경우
+    {
+      texts.current.push(pageText)//현재 페이지 내용 저장
+    }
+    else
+      texts.current[pageNum - 1] = pageText //현재 페이지 내용 업데이트
+    pageCount.current += 1
+    texts.current.push('')
+  }
+
+  function saveText (event)
+  {
+    setPageText(event.target.value)
   }
 
   return (
@@ -108,7 +118,7 @@ function EditorModal ()
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
-            <StyledArea className={fsType} style={{ textAlign: textJustify }}>{pageText}</StyledArea>
+            <StyledArea className={fsType} style={{ textAlign: textJustify }} value={pageText} onChange={saveText}></StyledArea>
             <PrevBtn onClick={prevPage}>{arrow1}</PrevBtn>
             <PageNum>{pageNum}</PageNum>
             <NextBtn onClick={nextPage}>{arrow2}</NextBtn>
@@ -124,7 +134,7 @@ function EditorModal ()
           </ButtonWrapper>
         </StyledSpan>
       </Container>
-    </Temp>
+    </Temp >
   );
 }
 
