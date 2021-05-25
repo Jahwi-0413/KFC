@@ -69,12 +69,10 @@ function EditorModal ()
 
   const nextPage = () =>
   {
-    console.log('pageNum : ' + pageNum);
     if (pageCount.current > pageNum)  //다음 페이지가 있는 경우
     {
       texts.current[pageNum - 1] = ''
       texts.current[pageNum - 1] = pageText //현재 페이지 내용 저장
-      // setPageText('')
       setPageText(texts.current[pageNum])//다음 페이지 불러오기
       setPageNum(pageNum + 1)
       return
