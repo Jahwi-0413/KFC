@@ -6,7 +6,6 @@ import fontSizeIcon from '../resources/format-size.svg'
 // import left from '../resources/align-left.png'
 // import right from '../resources/align-right.png'
 import justify from '../resources/align-justify.png'
-// import EditableDiv from '../components/ContentEditable'
 import ContentEditable from 'react-contenteditable'
 
 import '../index.css';
@@ -20,13 +19,6 @@ function EditorModal ()
     3: 'background3'
   }
 
-  // const justifyType =
-  // {
-  //   1: 'justify',
-  //   2: 'center',
-  //   3: 'left',
-  //   4: 'right'
-  // }
   const justifyType =
   {
     1: 'justify-justify',
@@ -38,14 +30,12 @@ function EditorModal ()
   const arrow1 = '<'
   const arrow2 = '>'
   const [pageNum, setPageNum] = useState(1)   //현재 보이는 페이지
-  // const [pageCount, setPageCount] = useState(1)
   const pageCount = useRef(1)
   const [pageText, setPageText] = useState('')
   const texts = useRef([])
 
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
-  // const [justifyIcon, setJustifyIcon] = useState('justify')
   const contenteditable = React.createRef()
 
   const changeFsType = () =>
@@ -128,17 +118,11 @@ function EditorModal ()
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
-            {/* <div>
-              <Paper contenteditable={true} className="paperInput"></Paper>
-            </div> */}
-            {/* <StyledArea className={fsType} style={{ textAlign: textJustify }} value={pageText} onChange={saveText}></StyledArea> */}
             <ContentEditable
               className={`paper ${fsType} ${textJustify}`}
-              // innerRef={this.contentEditable}
               html={pageText} // innerHTML of the editable div
               disabled={false}       // use true to disable editing
               onChange={saveText} // handle innerHTML change
-            // tagName='article' // Use a custom HTML tag (uses a div by default)
             />
             <PrevBtn onClick={prevPage}>{arrow1}</PrevBtn>
             <PageNum>{pageNum}</PageNum>
@@ -179,8 +163,6 @@ const Container = styled.div`
   z-index: 201;
 `;
 
-// justify-content: center;
-// align-items: center;
 const StyledSpan = styled.span`
   width:100%;
   height:100%;
@@ -195,17 +177,6 @@ const TextAreaWrapper = styled.div`
   margin-top:30px;
   margin-left:30px;
 `
-
-const StyledArea = styled.textarea`
-width: 28rem;
-height: 40rem;
-font-family: testfont;
-background-attachment: local;
-padding: 8px 10px;
-resize: none;
-overflow: hidden;
-display: block;
-`;
 
 const ButtonWrapper = styled.div`
 width: 8rem;
