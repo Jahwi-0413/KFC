@@ -6,6 +6,8 @@ import fontSizeIcon from '../resources/format-size.svg'
 // import left from '../resources/align-left.png'
 // import right from '../resources/align-right.png'
 import justify from '../resources/align-justify.png'
+// import EditableDiv from '../components/ContentEditable'
+import ContentEditable from 'react-contenteditable'
 
 import '../index.css';
 
@@ -18,12 +20,19 @@ function EditorModal ()
     3: 'background3'
   }
 
+  // const justifyType =
+  // {
+  //   1: 'justify',
+  //   2: 'center',
+  //   3: 'left',
+  //   4: 'right'
+  // }
   const justifyType =
   {
-    1: 'justify',
-    2: 'center',
-    3: 'left',
-    4: 'right'
+    1: 'justify-justify',
+    2: 'justify-center',
+    3: 'justify-left',
+    4: 'justify-right'
   }
 
   const arrow1 = '<'
@@ -37,6 +46,7 @@ function EditorModal ()
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
   // const [justifyIcon, setJustifyIcon] = useState('justify')
+  const contenteditable = React.createRef()
 
   const changeFsType = () =>
   {
@@ -65,6 +75,8 @@ function EditorModal ()
         setJustify(justifyType[1]); //jusify
         break;
     }
+    console.log(textJustify);
+    console.log(justifyType[1]);
   }
 
   const nextPage = () =>
@@ -116,7 +128,18 @@ function EditorModal ()
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
-            <StyledArea className={fsType} style={{ textAlign: textJustify }} value={pageText} onChange={saveText}></StyledArea>
+            {/* <div>
+              <Paper contenteditable={true} className="paperInput"></Paper>
+            </div> */}
+            {/* <StyledArea className={fsType} style={{ textAlign: textJustify }} value={pageText} onChange={saveText}></StyledArea> */}
+            <ContentEditable
+              className={`paper ${fsType} ${textJustify}`}
+              // innerRef={this.contentEditable}
+              html={pageText} // innerHTML of the editable div
+              disabled={false}       // use true to disable editing
+              onChange={saveText} // handle innerHTML change
+            // tagName='article' // Use a custom HTML tag (uses a div by default)
+            />
             <PrevBtn onClick={prevPage}>{arrow1}</PrevBtn>
             <PageNum>{pageNum}</PageNum>
             <NextBtn onClick={nextPage}>{arrow2}</NextBtn>
@@ -172,72 +195,73 @@ const TextAreaWrapper = styled.div`
   margin-top:30px;
   margin-left:30px;
 `
+
 const StyledArea = styled.textarea`
-  width:28rem;
-  height:40rem;
-  font-family: testfont;
-  background-attachment: local;
-  padding: 8px 10px;
-  resize:none;
-  overflow:hidden;
-  display:block;
+width: 28rem;
+height: 40rem;
+font-family: testfont;
+background-attachment: local;
+padding: 8px 10px;
+resize: none;
+overflow: hidden;
+display: block;
 `;
 
 const ButtonWrapper = styled.div`
-  width:8rem;
-  height:95%;
-  float:right;
-  position:relative;
-  right:0;
-  margin-right:40px;
-  margin-top:30px;
+width: 8rem;
+height: 95 %;
+float: right;
+position: relative;
+right: 0;
+margin-right: 40px;
+margin-top: 30px;
 `
 const Button = styled.button`
-  background:white;
-  border:0;
-  display:block;
-  cursor:pointer;
+background: white;
+border: 0;
+display: block;
+cursor: pointer;
 `
 
 const FontSizeBtn = styled(Button)`
-  position:relative;
-  display:inline;
+position: relative;
+display: inline;
 `
 const TextJustifyBtn = styled(Button)`
-  display:inline;
+display: inline;
 `
 const Img = styled.img`
-  width: 50px;
-  hiehgt:50px;
+width: 50px;
+hiehgt: 50px;
 `
 
 const BlueBtn = styled(Button)`
-  border:1px solid #57b6ff;
-  background-color:#57b6ff;
-  color:white;
+border: 1px solid #57b6ff;
+background-color:#57b6ff;
+color: white;
 `
 const PrevBtn = styled(Button)`
-  font-size:25px;
-  width:40px;
-  height:40px;
-  display:inline;
-  margin-top:20px;
+font-size: 25px;
+width: 40px;
+height: 40px;
+display: inline;
+margin-top: 20px;
 `
 
 const NextBtn = styled(PrevBtn)`
-`
+  `
 
 const PageNum = styled.span`
-  margin-left:20px;
-  margin-right:20px;
+margin-left: 20px;
+margin-right: 20px;
 `
 
 const AddPageBtn = styled(BlueBtn)`
-  font-size:16px;
-  width: 100px;
-  height:50px;
-  box-shadow: 4px 4px 4px 2px #a39a99;
-  margin-top:20px;
+font-size: 16px;
+width: 100px;
+height: 50px;
+box-shadow: 4px 4px 4px 2px #a39a99;
+margin-top: 20px;
 `
 
 export default EditorModal

@@ -17,7 +17,7 @@ code {
   src: url('./resources/fonts/1.ttf') format('woff');
 }
 
-textarea.background1 {
+.background1 {
   font-size: 20px;
   background-image: linear-gradient(to right, white 10px, transparent 10px),
     linear-gradient(to left, white 10px, transparent 10px),
@@ -31,7 +31,7 @@ textarea.background1 {
   line-height: 31px;
 }
 
-textarea.background2 {
+.background2 {
   font-size: 28px;
   background-image: linear-gradient(to right, white 10px, transparent 10px),
     linear-gradient(to left, white 10px, transparent 10px),
@@ -45,7 +45,7 @@ textarea.background2 {
   line-height: 37px;
 }
 
-textarea.background3 {
+.background3 {
   font-size: 35px;
   background-image: linear-gradient(to right, white 10px, transparent 10px),
     linear-gradient(to left, white 10px, transparent 10px),
@@ -57,4 +57,32 @@ textarea.background3 {
       white 31px
     );
   line-height: 44px;
+}
+
+.paper {
+  width: 28rem;
+  height: 40rem;
+  font-family: testfont;
+  background-attachment: local;
+  padding: 8px 10px;
+  resize: none;
+  overflow: hidden;
+  display: block;
+  border: 1px solid black;
+}
+
+.justify-justify {
+  text-align: justify !important;
+}
+
+.justify-center {
+  text-align: center !important;
+}
+
+.justify-left {
+  text-align: left !important;
+}
+
+.justify-right {
+  text-align: right !important;
 }
