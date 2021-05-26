@@ -7,7 +7,9 @@ import fontSizeIcon from '../resources/format-size.svg'
 // import right from '../resources/align-right.png'
 import justify from '../resources/align-justify.png'
 import ContentEditable from 'react-contenteditable'
-
+import download from '../resources/download.png'
+import domtoimg from 'dom-to-image'
+import FileSaver from 'file-saver'
 import '../index.css';
 
 function EditorModal ()
@@ -36,7 +38,6 @@ function EditorModal ()
 
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
-  const contenteditable = React.createRef()
 
   const changeFsType = () =>
   {
@@ -65,8 +66,6 @@ function EditorModal ()
         setJustify(justifyType[1]); //jusify
         break;
     }
-    console.log(textJustify);
-    console.log(justifyType[1]);
   }
 
   const nextPage = () =>
@@ -113,13 +112,24 @@ function EditorModal ()
     setPageText(event.target.value)
   }
 
+  const downloadPage = () =>
+  {
+    const node = document.querySelector('.letter-wrapper')
+    console.log(node);
+    domtoimg.toBlob(node)
+      .then(function (blob)
+      {
+        FileSaver.saveAs(blob, `${pageNum}_letter.png`);
+      });
+  }
+
   return (
     <Temp>
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
             <ContentEditable
-              className={`paper ${fsType} ${textJustify}`}
+              className={`paper ${fsType} ${textJustify} letter-wrapper`}
               html={pageText} // innerHTML of the editable div
               disabled={false}       // use true to disable editing
               onChange={saveText} // handle innerHTML change
@@ -136,6 +146,10 @@ function EditorModal ()
               <Img src={justify} />
             </TextJustifyBtn>
             <AddPageBtn onClick={addPage}>편지지 추가</AddPageBtn>
+            {/* 편지지 삭제 버튼 */}
+            <DownloadImgBtn type="button" onClick={downloadPage}>
+              <Img2 src={download} />
+            </DownloadImgBtn>
           </ButtonWrapper>
         </StyledSpan>
       </Container>
@@ -205,6 +219,10 @@ const Img = styled.img`
 width: 50px;
 hiehgt: 50px;
 `
+const Img2 = styled.img`
+width: 30px;
+hiehgt: 30px;
+`
 
 const BlueBtn = styled(Button)`
 border: 1px solid #57b6ff;
@@ -229,9 +247,16 @@ margin-right: 20px;
 
 const AddPageBtn = styled(BlueBtn)`
 font-size: 16px;
-width: 100px;
+width: 120px;
 height: 50px;
 box-shadow: 4px 4px 4px 2px #a39a99;
+margin-top: 20px;
+`
+
+const DownloadImgBtn = styled(AddPageBtn)`
+box-shadow: 4px 4px 4px 2px #a39a99;
+width: 120px;
+height: 50px;
 margin-top: 20px;
 `
 
