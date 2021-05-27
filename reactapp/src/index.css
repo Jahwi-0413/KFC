@@ -59,7 +59,7 @@ code {
   line-height: 44px;
 }
 
-.paper {
+.letter {
   width: 28rem;
   height: 40rem;
   font-family: testfont;
@@ -69,6 +69,9 @@ code {
   overflow: hidden;
   display: block;
   border: 1px solid black;
+  z-index: 4;
+  opacity: 0.8;
+  box-shadow: 5px 5px 5px 2px #a39a99;
 }
 
 .justify-justify {
@@ -85,4 +88,11 @@ code {
 
 .justify-right {
   text-align: right !important;
+}
+
+.letter_img {
+  background-repeat: no-repeat;
+  width: fit-content;
+  height: fit-content;
+  background-size: 100% 100%;
 }

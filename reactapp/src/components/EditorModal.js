@@ -12,6 +12,12 @@ import domtoimg from 'dom-to-image'
 import FileSaver from 'file-saver'
 import '../index.css';
 
+import letter1 from '../resources/letter_1.jpg'
+import letter2 from '../resources/letter_2.png'
+import letter3 from '../resources/letter_3.png'
+import letter4 from '../resources/letter_4.png'
+
+
 function EditorModal ()
 {
   const fsTypeClass =
@@ -38,6 +44,7 @@ function EditorModal ()
 
   const [fsType, setFsType] = useState(fsTypeClass[1])
   const [textJustify, setJustify] = useState(justifyType[1])
+  const [letterImg, setLetterImg] = useState()
 
   const changeFsType = () =>
   {
@@ -94,6 +101,22 @@ function EditorModal ()
     setPageNum(pageNum - 1)
   }
 
+  const changeLetterImg = (imgType) =>
+  {
+    switch (imgType)
+    {
+      case 1: setLetterImg(letter1); break;
+      case 2: setLetterImg(letter2); break;
+      case 3: setLetterImg(letter3); break;
+      case 4: setLetterImg(letter4); break;
+    }
+  }
+
+  const deleteLetterImg = () =>
+  {
+    setLetterImg()
+  }
+
   const addPage = () =>
   {
     texts.current.forEach(i => console.log(i))
@@ -128,12 +151,14 @@ function EditorModal ()
       <Container>
         <StyledSpan>
           <TextAreaWrapper>
-            <ContentEditable
-              className={`paper ${fsType} ${textJustify} letter-wrapper`}
-              html={pageText} // innerHTML of the editable div
-              disabled={false}       // use true to disable editing
-              onChange={saveText} // handle innerHTML change
-            />
+            <Background className='letter_img letter-wrapper' style={{ backgroundImage: `url(${letterImg})` }}>
+              <ContentEditable
+                className={`letter ${fsType} ${textJustify}`}
+                html={pageText} // innerHTML of the editable div
+                disabled={false}       // use true to disable editing
+                onChange={saveText} // handle innerHTML change
+              />
+            </Background>
             <PrevBtn onClick={prevPage}>{arrow1}</PrevBtn>
             <PageNum>{pageNum}</PageNum>
             <NextBtn onClick={nextPage}>{arrow2}</NextBtn>
@@ -145,8 +170,39 @@ function EditorModal ()
             <TextJustifyBtn type="button" onClick={changeJustifyType}>
               <Img src={justify} />
             </TextJustifyBtn>
+            <StyledDiv>편지지 이미지</StyledDiv>
+            <BackgroundImgWrapper>
+              <table>
+                <Tr>
+                  <Th>
+                    <Button onClick={() => changeLetterImg(1)}>
+                      <Img3 src={letter1}></Img3>
+                    </Button>
+                  </Th>
+                  <Th>
+                    <Button onClick={() => changeLetterImg(2)}>
+                      <Img3 src={letter2}></Img3>
+                    </Button>
+                  </Th>
+                </Tr>
+                <Tr>
+                  <Th>
+                    <Button onClick={() => changeLetterImg(3)}>
+                      <Img3 src={letter3}></Img3>
+                    </Button>
+                  </Th>
+                  <Th>
+                    <Button onClick={() => changeLetterImg(4)}>
+                      <Img3 src={letter4}></Img3>
+                    </Button>
+                  </Th>
+                </Tr>
+                <Tr>
+                  <Th colSpan="2"><Button onClick={deleteLetterImg}>배경화면 지우기</Button></Th>
+                </Tr>
+              </table>
+            </BackgroundImgWrapper>
             <AddPageBtn onClick={addPage}>편지지 추가</AddPageBtn>
-            {/* 편지지 삭제 버튼 */}
             <DownloadImgBtn type="button" onClick={downloadPage}>
               <Img2 src={download} />
             </DownloadImgBtn>
@@ -171,7 +227,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 43rem;
-  height: 90%;
+  height: 83%;
   background: white;
   border:1px solid black;
   z-index: 201;
@@ -181,6 +237,10 @@ const StyledSpan = styled.span`
   width:100%;
   height:100%;
 `
+const Background = styled.div`
+  z-index:1;
+`
+
 const TextAreaWrapper = styled.div`
   width: fit-content;
   height: 95%;
@@ -198,7 +258,7 @@ height: 95 %;
 float: right;
 position: relative;
 right: 0;
-margin-right: 40px;
+margin-right: 30px;
 margin-top: 30px;
 `
 const Button = styled.button`
@@ -222,6 +282,26 @@ hiehgt: 50px;
 const Img2 = styled.img`
 width: 30px;
 hiehgt: 30px;
+`
+const Img3 = styled.img`
+width: 42px;
+hiehgt: 80px;
+`
+
+const StyledDiv = styled.div`
+  border:1px solid black;
+  width:120px;
+  font-size:15px;
+  margin-top:20px;
+`
+const BackgroundImgWrapper = styled.div`
+
+`
+const Tr = styled.tr`
+  width:120px;
+`
+const Th = styled.th`
+  border:1px solid black;
 `
 
 const BlueBtn = styled(Button)`
