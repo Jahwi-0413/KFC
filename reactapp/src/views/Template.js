@@ -48,7 +48,7 @@ function Template ()
   const templateDownload = () =>
   {
     var element = document.createElement("a");
-    element.href = "/48-template.pdf";
+    element.href = "/48_template.pdf";
     element.download = "템플릿.pdf";
     element.click();
   };
