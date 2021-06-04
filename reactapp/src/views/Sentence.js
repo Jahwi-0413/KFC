@@ -28,10 +28,6 @@ function Sentence ()
   {
     setModal(false);
   }
-  const closeModal = () =>
-  {
-    setAlert(true);
-  };
   const uploadFile = (file) =>
   {
     const checkResult = checkFileType(file, ['jpg', 'png']);
@@ -59,7 +55,11 @@ function Sentence ()
         <Modal generated={generated}/> :
         <Modal2 generated={generated} onClickClose={onClickClose}/>
       )}
-      {modal && <Dimmer onClick={closeModal}/>}
+      {modal && (
+        generated === "폰트 생성 중" ?
+        <Dimmer onClick={()=>setAlert(true)} /> :
+        <Dimmer onClick={()=>setModal(false)} />
+      )}
       <MainComment>
         우리의 기술을 이용해 보세요!<br />아주 쉽고 빠르게 만들 수 있습니다.
       </MainComment>

@@ -84,7 +84,11 @@ function Template ()
         <Modal generated={generated}/> :
         <Modal2 generated={generated} onClickClose={onClickClose}/>
       )}
-      {modal && <Dimmer onClick={closeModal} />}
+      {modal && (
+        generated === "폰트 생성 중" ?
+        <Dimmer onClick={()=>setAlert(true)} /> :
+        <Dimmer onClick={()=>setModal(false)} />
+      )}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
       </MainComment>
