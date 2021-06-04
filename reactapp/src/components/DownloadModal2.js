@@ -12,7 +12,10 @@ function DownloadModal2 (props)
         <table>
           <tbody>
             <tr><Comment>{generated}</Comment></tr>
-            <tr><Download href={file} type="button" download>다운로드</Download></tr>
+            {generated === "폰트 생성 완료" ?
+              <tr><Download href={file} type="button" download>다운로드</Download></tr> :
+              <tr><Close onClick={props.onClickClose}>닫기</Close></tr>
+            }
           </tbody>
         </table>
 
@@ -43,7 +46,6 @@ const PopUp = styled.div`
 const Comment = styled.div`
   display:block;
 `;
-
 const Download = styled.a`
   display:block;
   outline : none;
@@ -53,6 +55,9 @@ const Download = styled.a`
   border:1px solid #F3D1D1;
   padding:10px;
   box-shadow: 2px 2px 3px 1px #666;
-`
+`;
+const Close = styled.button`
+  margin-top: 15px;
+`;
 
 export default DownloadModal2;

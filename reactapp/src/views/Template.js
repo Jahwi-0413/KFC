@@ -28,17 +28,22 @@ function Template ()
   //   setTimeout(() => setLoaded(true), 100);
   // }, []);
 
-  const onClickNo = () => {
+  const onClickNo = () =>
+  {
     setAlert(false);
   }
-  const onClickYes = () => {
-    setGenerated(-1);
+  const onClickYes = () =>
+  {
+    setGenerated("폰트 생성 실패");
     setAlert(false);
+  }
+  const onClickClose = () =>
+  {
     setModal(false);
   }
   const closeModal = () =>
   {
-    setModal(false);
+    setAlert(true);
   };
   const templateDownload = () =>
   {
@@ -74,8 +79,11 @@ function Template ()
   return (
     <Container>
       {alert && <Alert onClickNo={onClickNo} onClickYes={onClickYes}/>}
-      {modal && generated === "폰트 생성 중" && <Modal generated={generated}/>}
-      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated}/>}
+      {modal && (
+        generated === "폰트 생성 중" ?
+        <Modal generated={generated}/> :
+        <Modal2 generated={generated} onClickClose={onClickClose}/>
+      )}
       {modal && <Dimmer onClick={closeModal} />}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.

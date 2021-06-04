@@ -15,15 +15,21 @@ function Sentence ()
   const [ alert, setAlert ] = useState(false);
   const [ generated, setGenerated ] = useState("");
 
-  const onClickNo = () => {
+  const onClickNo = () =>
+  {
     setAlert(false);
   }
-  const onClickYes = () => {
-    setGenerated(-1);
+  const onClickYes = () =>
+  {
+    setGenerated("폰트 생성 실패");
     setAlert(false);
+  }
+  const onClickClose = () =>
+  {
     setModal(false);
   }
-  const closeModal = () => {
+  const closeModal = () =>
+  {
     setAlert(true);
   };
   const uploadFile = (file) =>
@@ -48,8 +54,11 @@ function Sentence ()
   return (
     <Container>
       {alert && <Alert onClickNo={onClickNo} onClickYes={onClickYes}/>}
-      {modal && generated === "폰트 생성 중" && <Modal generated={generated}/>}
-      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated}/>}
+      {modal && (
+        generated === "폰트 생성 중" ?
+        <Modal generated={generated}/> :
+        <Modal2 generated={generated} onClickClose={onClickClose}/>
+      )}
       {modal && <Dimmer onClick={closeModal}/>}
       <MainComment>
         우리의 기술을 이용해 보세요!<br />아주 쉽고 빠르게 만들 수 있습니다.
