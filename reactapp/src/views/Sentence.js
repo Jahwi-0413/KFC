@@ -40,11 +40,8 @@ function Sentence ()
       return;
     }
 
+    setGenerated("폰트 생성 중");
     sendSentenceImage(file, setGenerated);
-    if (generated === -1)
-      setGenerated("폰트 생성 실패");
-    else
-      setGenerated("폰트 생성 중");
     setModal(true);
   };
 
