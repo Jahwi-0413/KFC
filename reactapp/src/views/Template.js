@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import Loader from '../components/Loader';
+import Alert from '../components/AlertModal';
 import Modal from '../components/DownloadModal';
 import Modal2 from '../components/DownloadModal2';
 import Dimmer from '../components/Dimmer';
@@ -12,8 +12,9 @@ import { sendTemplateImage } from '../RESTManager';
 
 function Template ()
 {
-  const [modal, setModal] = useState(false);
-  const [generated, setGenerated] = useState("");
+  const [ modal, setModal ] = useState(false);
+  const [ alert, setAlert ] = useState(false);
+  const [ generated, setGenerated ] = useState("");
   // const [ loaded, setLoaded ] = useState(false);
 
   // useEffect(() => {
@@ -27,6 +28,14 @@ function Template ()
   //   setTimeout(() => setLoaded(true), 100);
   // }, []);
 
+  const onClickNo = () => {
+    setAlert(false);
+  }
+  const onClickYes = () => {
+    setGenerated(-1);
+    setAlert(false);
+    setModal(false);
+  }
   const closeModal = () =>
   {
     setModal(false);
@@ -64,8 +73,9 @@ function Template ()
 
   return (
     <Container>
-      {modal && generated === "폰트 생성 중" && <Modal generated={generated} />}
-      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated} />}
+      {alert && <Alert onClickNo={onClickNo} onClickYes={onClickYes}/>}
+      {modal && generated === "폰트 생성 중" && <Modal generated={generated}/>}
+      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated}/>}
       {modal && <Dimmer onClick={closeModal} />}
       <MainComment>
         서식을 이용하여 더 정밀한<br />손글씨 폰트를 만들어 보세요.
@@ -120,32 +130,6 @@ const DownloadButton = styled.button`
     outline: none;
   }
   padding: 5px 40px;
-`;
-const TemplateUpload = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const UploadDragIn = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 250px;
-  background: lightgray;
-  justify-content: center;
-  align-items: center;
-`;
-const DragInImage = styled.img`
-  width: 40px;
-`;
-const DragInNotice = styled.p`
-  font-size: 15px;
-  color: #333;
-`;
-const UploadNotice = styled.p`
-  font-size: 10px;
-  color: gray;
-  margin-top: 2px;
 `;
 
 export default Template;

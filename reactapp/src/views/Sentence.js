@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import Alert from '../components/AlertModal';
 import Modal from '../components/DownloadModal';
+import Modal2 from '../components/DownloadModal2';
 import Dimmer from '../components/Dimmer';
 import DaD from '../components/DaD';
 import { checkFileType } from '../common/utils';
@@ -10,10 +12,19 @@ import { sendSentenceImage } from '../RESTManager';
 function Sentence ()
 {
   const [ modal, setModal ] = useState(false);
+  const [ alert, setAlert ] = useState(false);
   const [ generated, setGenerated ] = useState("");
 
-  const closeModal = () => {
+  const onClickNo = () => {
+    setAlert(false);
+  }
+  const onClickYes = () => {
+    setGenerated(-1);
+    setAlert(false);
     setModal(false);
+  }
+  const closeModal = () => {
+    setAlert(true);
   };
   const uploadFile = (file) =>
   {
@@ -39,7 +50,9 @@ function Sentence ()
 
   return (
     <Container>
-      {modal && <Modal generated={generated}/>}
+      {alert && <Alert onClickNo={onClickNo} onClickYes={onClickYes}/>}
+      {modal && generated === "폰트 생성 중" && <Modal generated={generated}/>}
+      {modal && generated === "폰트 생성 완료" && <Modal2 generated={generated}/>}
       {modal && <Dimmer onClick={closeModal}/>}
       <MainComment>
         우리의 기술을 이용해 보세요!<br />아주 쉽고 빠르게 만들 수 있습니다.
