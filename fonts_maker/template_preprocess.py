@@ -144,20 +144,23 @@ def template_process(template_path = './ori_handwriting/', pic_name = 'test.jpg'
     kernel = np.ones((3, 3), np.uint8)
     temp_img = cv2.erode(temp_img, kernel, iterations=1)
 
-    crop_range = int(temp_img.shape[0] / 12)
-    margin = int(crop_range / 10)
+    height_crop_range = int(temp_img.shape[0] / 12)
+    height_margin = int(height_crop_range / 7)
+
+    width_crop_range = int(temp_img.shape[1] / 8)
+    width_margin = int(width_crop_range / 7)
 
     # crop and centering
     for i, char in enumerate(char_list):
-        crop_img = np.zeros((crop_range, crop_range))
+        crop_img = np.zeros((height_crop_range, width_crop_range))
         if i % 4 == 0:
-            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, crop_range + margin : 2 * crop_range - margin]
+            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, width_crop_range + width_margin : 2 * width_crop_range - width_margin]
         elif i % 4 == 1:
-            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 3 * crop_range + margin : 4 * crop_range - margin]
+            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 3 * width_crop_range + width_margin : 4 * width_crop_range - width_margin]
         elif i % 4 == 2:
-            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 5 * crop_range + margin : 6 * crop_range - margin]
+            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 5 * width_crop_range + width_margin : 6 * width_crop_range - width_margin]
         else:
-            crop_img = temp_img[int(i / 4) * crop_range + margin : (int(i / 4) + 1) * crop_range - margin, 7 * crop_range + margin : -margin]
+            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 7 * width_crop_range + width_margin : -width_margin]
         
         crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
         ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
@@ -169,4 +172,5 @@ def template_process(template_path = './ori_handwriting/', pic_name = 'test.jpg'
     return True
 
 if __name__ == "__main__":
-    template_process()
+    template_process('./ori_handwriting/', 'test.png')
+    # D:/KFC/KFC/kfcdjangoserver/uploads/1.png
