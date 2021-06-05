@@ -153,7 +153,7 @@ function EditorModal ()
           <TextAreaWrapper>
             <Background className='letter_img letter-wrapper' style={{ backgroundImage: `url(${letterImg})` }}>
               <ContentEditable
-                className={`letter ${fsType} ${textJustify}`}
+                className={`letter ${fsType} ${textJustify} editable letter-size`}
                 html={pageText} // innerHTML of the editable div
                 disabled={false}       // use true to disable editing
                 onChange={saveText} // handle innerHTML change
@@ -223,11 +223,14 @@ const Temp = styled.div`
   height: 100%;
   overflow: hidden;
 `;
+
 const Container = styled.div` 
   display: flex;
   flex-direction: column;
-  width: 43rem;
-  height: 83%;
+  width: 29%;
+  height: 69%;
+  min-width:630px;
+  min-height:650px;
   background: white;
   border:1px solid black;
   z-index: 201;
@@ -242,24 +245,21 @@ const Background = styled.div`
 `
 
 const TextAreaWrapper = styled.div`
-  width: fit-content;
-  height: 95%;
   font-size: 30px;
   font-family: testfont;
   outline: 0;
   float: left;
-  margin-top:30px;
-  margin-left:30px;
+  margin-top:5%;
+  margin-left:5%;
 `
 
 const ButtonWrapper = styled.div`
-width: 8rem;
 height: 95 %;
 float: right;
 position: relative;
 right: 0;
-margin-right: 30px;
-margin-top: 30px;
+margin-right: 5%;
+margin-top: 5%;
 `
 const Button = styled.button`
 background: white;
@@ -290,7 +290,7 @@ hiehgt: 80px;
 
 const StyledDiv = styled.div`
   border:1px solid black;
-  width:120px;
+  width:50%;
   font-size:15px;
   margin-top:20px;
 `
