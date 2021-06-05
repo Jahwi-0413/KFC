@@ -86,7 +86,7 @@ def fit_edge(img, cnts):
     M = cv2.getPerspectiveTransform(src=src_np, dst=dst_np)
     result = cv2.warpPerspective(test, M=M, dsize=(width, height))
 
-    return result
+    return cv2.cvtColor(result, cv2.COLOR_RGB2GRAY)
 
 ## vertex convex hull
 def find_vertex(contours):
