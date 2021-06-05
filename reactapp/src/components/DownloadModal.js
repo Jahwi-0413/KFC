@@ -9,8 +9,8 @@ function DownloadModal (props)
   return (
     <Container>
       <PopUp>
-        <Comment>{generated}</Comment>
-        <CircularProgress color="secondary" />
+        <Comment>{generated}<br/>(약 15분 소요됩니다)</Comment>
+        <CircularProgress color="secondary"/>
       </PopUp>
     </Container>
   );
