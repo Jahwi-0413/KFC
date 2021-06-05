@@ -4,6 +4,97 @@ import imageio
 import scipy.misc as misc
 from scipy.misc import imresize
 from PIL import Image
+import imutils
+
+## process pixel binarization
+def binarize(img):
+    # image = contrast(image)
+    image = cv2.GaussianBlur(img, (5, 5), 0)
+
+    # get a binary image - threshold for each area
+    _, binary1 = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    binary2 = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 25, 7)
+    
+    return binary2
+
+## draw and test contours
+def draw(img, cnts):
+    test = img.copy()
+    test = cv2.cvtColor(test, cv2.COLOR_GRAY2RGB)
+
+    for c in cnts:
+        peri = cv2.arcLength(c, True)
+        approx = cv2.approxPolyDP(c, 0.02*peri, True) # vertex point count
+        cv2.drawContours(test, [approx], -1, (0, 0, 255), 10)
+
+        # if len(approx) == 4:
+        #   break
+    
+    show(test)
+
+## test
+def show(img):
+    img = imutils.resize(img, height=500)
+    cv2.imshow('test', img)
+    cv2.waitKey(0)
+
+## find and cut largest rectangle
+def cut_edge(img):
+    kernel = np.ones((3, 3), np.uint8)
+    img = cv2.erode(img, kernel, iterations=1)
+
+    # find contours(최고 가장자리 포함)
+    contours, _ = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    largest_contours = sorted(contours, key=cv2.contourArea)[-2:]
+
+    # # get a Bounding Rect
+    # x, y, w, h = cv2.boundingRect(largest_contours[0])
+
+    # return img[y:y+h,x:x+w]
+
+    return img, largest_contours
+
+## fit to the edge
+def fit_edge(img, cnts):
+    test = img.copy()
+    test = cv2.cvtColor(test, cv2.COLOR_GRAY2RGB)
+
+    screenCnt = np.array([])
+    for c in cnts:
+        peri = cv2.arcLength(c, True)
+        approx = cv2.approxPolyDP(c, 0.02*peri, True) # vertex point count\
+
+        if len(approx) == 4:
+            screenCnt = approx
+            break
+
+    if len(screenCnt) == 0:
+        return test
+
+    src_np = np.array(screenCnt, dtype=np.float32)
+
+    width = max(np.linalg.norm(src_np[0] - src_np[1]), np.linalg.norm(src_np[2] - src_np[3]))
+    height = max(np.linalg.norm(src_np[0] - src_np[3]), np.linalg.norm(src_np[1] - src_np[2]))
+
+    dst_np = np.array([
+        [0, 0],
+        [width, 0],
+        [width, height],
+        [0, height]
+    ], dtype=np.float32)
+
+    M = cv2.getPerspectiveTransform(src=src_np, dst=dst_np)
+    result = cv2.warpPerspective(test, M=M, dsize=(width, height))
+
+    return result
+
+## vertex convex hull
+def find_vertex(contours):
+    hull_contours = []
+    for c in contours:
+        hull_contours.append(cv2.convexHull(c, clockwise=False))
+    
+    return np.array(hull_contours)
 
 def normalize_image(img):
     """
@@ -141,26 +232,28 @@ def template_process(template_path = './ori_handwriting/', pic_name = 'test.jpg'
 
     # 첫번째 페이지
     temp_img = cv2.imread(template_path + pic_name, flags = cv2.IMREAD_GRAYSCALE)
-    kernel = np.ones((3, 3), np.uint8)
-    temp_img = cv2.erode(temp_img, kernel, iterations=1)
+    binary = binarize(temp_img)
+    cut_img, contours = cut_edge(binary)
+    hull = find_vertex(contours)
+    fit_img = fit_edge(cut_img, hull)
 
-    height_crop_range = int(temp_img.shape[0] / 12)
+    height_crop_range = int(fit_img.shape[0] / 12)
     height_margin = int(height_crop_range / 7)
 
-    width_crop_range = int(temp_img.shape[1] / 8)
+    width_crop_range = int(fit_img.shape[1] / 8)
     width_margin = int(width_crop_range / 7)
 
     # crop and centering
     for i, char in enumerate(char_list):
         crop_img = np.zeros((height_crop_range, width_crop_range))
         if i % 4 == 0:
-            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, width_crop_range + width_margin : 2 * width_crop_range - width_margin]
+            crop_img = fit_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, width_crop_range + width_margin : 2 * width_crop_range - width_margin]
         elif i % 4 == 1:
-            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 3 * width_crop_range + width_margin : 4 * width_crop_range - width_margin]
+            crop_img = fit_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 3 * width_crop_range + width_margin : 4 * width_crop_range - width_margin]
         elif i % 4 == 2:
-            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 5 * width_crop_range + width_margin : 6 * width_crop_range - width_margin]
+            crop_img = fit_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 5 * width_crop_range + width_margin : 6 * width_crop_range - width_margin]
         else:
-            crop_img = temp_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 7 * width_crop_range + width_margin : -width_margin]
+            crop_img = fit_img[int(i / 4) * height_crop_range + height_margin : (int(i / 4) + 1) * height_crop_range - height_margin, 7 * width_crop_range + width_margin : -width_margin]
         
         crop_img = cv2.resize(crop_img, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
         ret, crop_img = cv2.threshold(crop_img, 127, 255, cv2.THRESH_BINARY)
