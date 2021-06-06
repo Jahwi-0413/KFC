@@ -71,3 +71,6 @@ def gen_json(svg_path = './ori_handwriting/svgs/', json_save_name = 'original.js
 
     with open(json_save_name, 'w', encoding='utf-8') as make_file:
         json.dump(whole_data, make_file, ensure_ascii=False, indent="\t")
+
+if __name__ == "__main__":
+    gen_json()

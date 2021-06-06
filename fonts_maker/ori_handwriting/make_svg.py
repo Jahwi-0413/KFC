@@ -7,7 +7,7 @@ import operator
 from collections import deque
 from io import StringIO
 from optparse import OptionParser
-
+from multiprocessing import freeze_support
 from PIL import Image
 
 
@@ -249,3 +249,7 @@ def gen_svg(trans_path, save_path):
 
     print("%s sec" % (time.time() - start_time))
     return True
+
+if __name__ == "__main__":
+    freeze_support()
+    gen_svg('./ori_handwriting/transparented/', './ori_handwriting/svgs/')

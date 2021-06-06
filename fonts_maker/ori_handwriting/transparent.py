@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import tqdm
  
-PATH = './ori_handwriting/centered_pic/'
+PATH = './ori_handwriting/test/'
 SAVE_PATH = './ori_handwriting/transparented/'
 
 def transparent_img(img_path = PATH, out_path = SAVE_PATH, is_result = False):
@@ -33,3 +33,6 @@ def transparent_img(img_path = PATH, out_path = SAVE_PATH, is_result = False):
             img.save(out_path + pic.replace('example.ttf_', ""), "PNG") # PNG 포맷으로 저장합니다.
         else:
             img.save(out_path + pic, "PNG")
+
+if __name__ == "__main__":
+    transparent_img()

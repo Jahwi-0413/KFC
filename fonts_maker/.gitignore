@@ -6,6 +6,8 @@ runs/
 
 # test data
 *.ttf
+*.jpg
+*.png
 result/
 original.json
 result.json
@@ -14,6 +16,7 @@ test*
 
 # pretrained_model
 pretrained/
+tessdata/
 
 # pictures
 ori_handwriting/centered_pic/

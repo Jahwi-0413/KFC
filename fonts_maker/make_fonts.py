@@ -2,10 +2,12 @@ import ori_handwriting.transparent as transparent
 import ori_handwriting.make_svg as make_svg
 import ori_handwriting.jsongenerator as jsongenerator
 from multiprocessing import freeze_support
+from meta.meta_gen import gen_meta
 import time
 import cv2
 import os
 import tqdm
+import glob
 
 hw_pic_path = './ori_handwriting/centered_pic/'
 hw_transparent_path = './ori_handwriting/transparented/'
@@ -24,6 +26,7 @@ def make_font():
     
     transparent.transparent_img(hw_pic_path, hw_transparent_path)
     flag = make_svg.gen_svg(hw_transparent_path, hw_svg_path)
+    gen_meta()
 
     while True:
         if flag:
@@ -34,6 +37,9 @@ def make_font():
     os.system("python prepare_dataset.py kor datasets/dumps meta/kor_split.json datasets/dumps")
     os.system("python evaluator.py KFC ./pretrained/korean-handwriting.pth ./result cfgs/kor.yaml --mode user-study-save")
 
+    [os.remove(f) for f in glob.glob("./ori_handwriting/svgs/*")]
+    [os.remove(f) for f in glob.glob("./ori_handwriting/transparented/*")]
+    [os.remove(f) for f in glob.glob("./ori_handwriting/centered_pic/*")]
     os.remove("./datasets/dumps/example.hdf5")
 
     PATH = os.listdir(rst_pic_path)
