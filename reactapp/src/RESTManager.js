@@ -50,8 +50,8 @@ export const sendSentenceImage = (file, callback) =>      //사용자가 입력�
   }).then((response) =>
   {
     if (response.status === 200)
-      callback(response.data);
+      callback(true);
     else
-      callback(-1);
+      callback(false);
   });
 };

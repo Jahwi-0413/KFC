@@ -24,6 +24,11 @@ function Sentence ()
     setGenerated("폰트 생성 실패");
     setAlert(false);
   }
+  const setProps = (result) =>
+  {
+    if (result === false) setGenerated("폰트 생성 실패");
+    else setGenerated("폰트 생성 완료");
+  }
   const onClickClose = () =>
   {
     setModal(false);
@@ -43,7 +48,7 @@ function Sentence ()
     }
 
     setGenerated("폰트 생성 중");
-    sendSentenceImage(file, setGenerated);
+    sendSentenceImage(file, setProps);
     setModal(true);
   };
 
