@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import tqdm
  
-PATH = './ori_handwriting/test/'
+PATH = './ori_handwriting/ori_handwriting/'
 SAVE_PATH = './ori_handwriting/transparented/'
 
 def transparent_img(img_path = PATH, out_path = SAVE_PATH, is_result = False):
