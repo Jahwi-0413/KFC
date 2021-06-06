@@ -55,3 +55,8 @@ export const sendSentenceImage = (file, callback) =>      //사용자가 입력�
       callback(false);
   });
 };
+
+export const requestKillProcess = () =>
+{
+  axios.get('/api/resKillProcess/');
+}

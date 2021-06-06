@@ -7,7 +7,7 @@ import Modal2 from '../components/DownloadModal2';
 import Dimmer from '../components/Dimmer';
 import DaD from '../components/DaD';
 import { checkFileType } from '../common/utils';
-import { sendSentenceImage } from '../RESTManager';
+import { sendSentenceImage, requestKillProcess } from '../RESTManager';
 
 function Sentence ()
 {
@@ -51,10 +51,15 @@ function Sentence ()
     sendSentenceImage(file, setProps);
     setModal(true);
   };
+  const cancelFont = () =>
+  {
+    requestKillProcess()
+    onClickYes()
+  }
 
   return (
     <Container>
-      {alert && <Alert onClickNo={onClickNo} onClickYes={onClickYes} />}
+      {alert && <Alert onClickNo={onClickNo} onClickYes={cancelFont} />}
       {modal && (
         generated === "폰트 생성 중" ?
           <Modal generated={generated} /> :
