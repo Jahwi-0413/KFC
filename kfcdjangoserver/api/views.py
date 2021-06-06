@@ -26,7 +26,8 @@ def getTemplateImage(request):
 @csrf_exempt
 def getSentenceImage(request):
   file = request.FILES['file']
-  fm.save_image_file(file, False)
+  filename = fm.save_image_file(file)
+  fm.save_ttf_file(filename, False)
   response = HttpResponse("ok")
   response.status_code = 200
   return response
