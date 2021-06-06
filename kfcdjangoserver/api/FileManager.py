@@ -36,8 +36,8 @@ def save_image_file(file):
   os.remove(removeFile)
   return file.name
 
-def save_ttf_file(imagename):
-  font_file_path = font_maker.font_make(os.path.join(pathfinder(), 'kfcdjangoserver/uploads/'), '1.'+extfinder(imagename)) #결과 파일 경로
+def save_ttf_file(imagename, is_template):
+  font_file_path = font_maker.font_make(os.path.join(pathfinder(), 'kfcdjangoserver/uploads/'), '1.'+extfinder(imagename), is_template) #결과 파일 경로
 
   base_dir = os.path.join(pathfinder(), 'reactapp\\src\\resources\\resultfonts')
   saved_file = os.path.join(base_dir, 'font-file.ttf')
