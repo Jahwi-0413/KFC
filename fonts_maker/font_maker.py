@@ -9,7 +9,7 @@ def font_make(pic_path = './ori_handwriting/', pic_name = 'test.png', is_templat
     PATH = os.getcwd()
 
     os.chdir('D:/KFC/KFC/fonts_maker')
-    if is_templeate:
+    if is_template:
         template_process(pic_path, pic_name)
     else:
         split(pic_path, pic_name)
@@ -23,4 +23,4 @@ def font_make(pic_path = './ori_handwriting/', pic_name = 'test.png', is_templat
 if __name__ == '__main__':
     freeze_support()
 
-    print(font_make())
+    print(font_make(pic_name='25383.jpg', is_template=False))
