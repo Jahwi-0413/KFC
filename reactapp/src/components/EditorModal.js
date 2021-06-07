@@ -290,7 +290,7 @@ hiehgt: 80px;
 
 const StyledDiv = styled.div`
   border:1px solid black;
-  width:50%;
+  width:100%;
   font-size:15px;
   margin-top:20px;
 `
