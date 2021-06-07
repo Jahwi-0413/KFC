@@ -76,7 +76,7 @@ function Sentence ()
 
       <SentenceMenu>
         <SentenceComment>
-          옛적 볶은 큰 뻐꾸기 값 품삯 요청을 읽어놓고는 잊었죠<br />
+          옛적 볶은 큰 뻐꾸기 값의 품삯 요청을 읽어놓고 잊었죠<br />
           특히 쓴 돼지 귀 겉 핥는 내 친구와 앉아 <br />뚫은 돛 옆 부엌에 갇힌 삶 얘기를<br />
           외곬마냥 읊던 짧은 웨딩 다큐는 권하지 않았습니다<br />
         </SentenceComment>

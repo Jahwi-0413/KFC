@@ -10,7 +10,7 @@ def split(pic_path = './', pic_name = '25383.jpg'):
     img2 = cv2.erode(img, np.ones((9, 9)))
     d = pytesseract.image_to_boxes(img2, lang='kor', output_type=Output.DICT, config='--psm 6 --oem 0')
     print(answer)
-    answer = "옛적볶은큰뻐꾸기값품삯요청을읽어놓고는잊었죠특히쓴돼지귀겉핥는내친구와앉아뚫은돛옆부엌에갇힌삶얘기를외곬마냥읊던짧은웨딩다큐는권하지않았습니다"
+    answer = "옛적볶은큰뻐꾸기값의품삯요청을읽어놓고잊었죠특히쓴돼지귀겉핥는내친구와앉아뚫은돛옆부엌에갇힌삶얘기를외곬마냥읊던짧은웨딩다큐는권하지않았습니다"
 
     height = img.shape[0]
 
